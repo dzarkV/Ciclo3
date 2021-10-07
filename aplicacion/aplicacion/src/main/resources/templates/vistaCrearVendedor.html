@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Listado Vendedores</title>
+        <meta charset="UTF-8"> </meta>
+        
+    </head>
+    <body>
+        <h1>Forma para creación de Vendedores</h1>
+        <form th:action = "@{/crear/vendedor}" th:object="${vendedor}" method="post">
+            <label> Código del Vendedor</label>
+            <input id = "codigovendedor" type="text" th:field ="*{codVendedor}"/>
+            <label> Nombre del Vendedor</label>
+            <input id = "nombrevendedor" type="text" th:field = "*{nombreVendedor}"/> 
+            <button type = "submit">Agregar Vendedor</button>
+        </form>
+    </body>
+</html>

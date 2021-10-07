@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Listado Vendedores</title>
+        <meta charset="UTF-8"> </meta>
+        
+    </head>
+    <body>
+        <h1>Forma para creación de Productos</h1>
+        <form th:action = "@{/crear/producto}" th:object="${producto}" method="post">
+            <label> Código del Producto </label>
+            <input id = "codigoproducto" type="text" th:field ="*{codProducto}"/>
+            <label> Nombre del Producto </label>
+            <input id = "nombreproducto" type="text" th:field = "*{nombreProducto}"/> <br/><br/>
+            <label> Descripción Producto</label>
+            <input id = "descripcionproducto" type="text" th:field = "*{descripcionProducto}"/> 
+            <label> Precio del Producto ($)</label>
+            <input id = "precioproducto" type="text" th:field = "*{precioProducto}"/>             
+            <br/> <br/>               
+            <button type = "submit">Agregar Producto</button>
+        </form>
+    </body>
+</html>
