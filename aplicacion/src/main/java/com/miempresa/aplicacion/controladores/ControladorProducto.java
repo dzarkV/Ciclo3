@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -34,6 +37,21 @@ public class ControladorProducto {
         model.addAttribute("productos",productos);
         return "vistaProducto";
     }
+ 
+    @GetMapping("/crear/producto") //path del controlador
+    public String crearProducto(Model model){
+        
+        model.addAttribute("producto",new Producto());
+        return "vistaCrearProducto";
+    }   
     
+    @PostMapping("/crear/producto")
+    public RedirectView procesarProducto(@ModelAttribute Producto producto){
+       Producto productoGuardado = repositorioProducto.save(producto);
+       if (productoGuardado == null){
+           return new RedirectView("/crear/producto/",true);
+       }
+       return new RedirectView("/productos/"+productoGuardado.getCodProducto(),true);
+    }    
     
 }

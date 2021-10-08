@@ -49,24 +49,25 @@ CREATE TABLE t_ventas (
 	cod_producto VARCHAR(8) NOT NULL,
 	fecha_venta DATE,
 	cod_vendedor VARCHAR(8),
+	valor_factura Float,
 	FOREIGN KEY (cod_producto) REFERENCES t_productos (cod_producto),
 	FOREIGN KEY (cod_vendedor) REFERENCES t_vendedores (cod_vendedor)
 );
 INSERT INTO t_ventas (
-numero_factura,cod_producto, fecha_venta,cod_vendedor) 
-VALUES ('FAC001','AAAAA002','2021-08-21','VEND01');
+numero_factura,cod_producto, fecha_venta,cod_vendedor,valor_factura) 
+VALUES ('FAC001','AAAAA002','2021-08-21','VEND01',1000);
 INSERT INTO t_ventas (
-numero_factura,cod_producto, fecha_venta,cod_vendedor) 
-VALUES ('FAC002','AAAAA003','2021-08-21','VEND02');
+numero_factura,cod_producto, fecha_venta,cod_vendedor,valor_factura) 
+VALUES ('FAC002','AAAAA003','2021-08-21','VEND02',2000);
 INSERT INTO t_ventas (
-numero_factura,cod_producto, fecha_venta,cod_vendedor) 
-VALUES ('FAC003','BBBBB001','2021-08-21','VEND01');
+numero_factura,cod_producto, fecha_venta,cod_vendedor,valor_factura) 
+VALUES ('FAC003','BBBBB001','2021-08-21','VEND01',3000);
 INSERT INTO t_ventas (
-numero_factura,cod_producto, fecha_venta,cod_vendedor) 
-VALUES ('FAC004','AAAAA002','2021-08-21','VEND03');
+numero_factura,cod_producto, fecha_venta,cod_vendedor,valor_factura) 
+VALUES ('FAC004','AAAAA002','2021-08-21','VEND03',4000);
 INSERT INTO t_ventas (
-numero_factura,cod_producto, fecha_venta,cod_vendedor) 
-VALUES ('FAC005','AAAAA001','2021-08-22','VEND01');
+numero_factura,cod_producto, fecha_venta,cod_vendedor,valor_factura) 
+VALUES ('FAC005','AAAAA001','2021-08-22','VEND01',5000);
 INSERT INTO t_ventas (
-numero_factura,cod_producto, fecha_venta,cod_vendedor) 
-VALUES ('FAC006','AAAAA002','2021-08-22','VEND02');
+numero_factura,cod_producto, fecha_venta,cod_vendedor,valor_factura) 
+VALUES ('FAC006','AAAAA002','2021-08-22','VEND02',6000);

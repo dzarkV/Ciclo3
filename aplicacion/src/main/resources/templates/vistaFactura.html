@@ -4,35 +4,36 @@
       xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
-        <title>Listado Productos</title>
+        <title>Listado Facturas</title>
         <meta charset="UTF-8"> </meta>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"/>
     </head>
-
+    
     <body>
-        <h3>Lista de Productos</h3>
+        <h3>Lista de Facturas</h3>
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col"><strong>Código</strong></div>
-                    <div class="col"><strong>Nombre de producto</strong></div>
-                    <div class="col"><strong>Descripción</strong></div>
-                    <div class="col"><strong>Precio</strong></div>
+                    <div class="col"><strong>No.Fac</strong></div>
+                    <div class="col"><strong>Cod.Prod</strong></div>
+                    <div class="col"><strong>Fecha</strong></div>
+                    <div class="col"><strong>Cod.Vend</strong></div>
+                    <div class="col"><strong>Valor.Facura</strong></div>
                 </div>
             </div>
         </div>
-        <div class="card" th:each="producto: ${productos}">
+        <div class="card" th:each="factura: ${facturas}">
             <div class="card-body">
                 <div class="row">
-                    <div class="col" th:text="${producto.codProducto}"></div>
-                    <div class="col" th:text="${producto.nombreProducto}"></div>
-                    <div class="col" th:text="${producto.descripcionProducto}"></div>
-                    <div class="col" th:text="${producto.precioProducto}"></div>
+                    <div class="col" th:text="${factura.numeroFactura}"></div>
+                    <div class="col" th:text="${factura.producto.codProducto}"></div>
+                    <div class="col" th:text="${factura.fechaVenta}"></div>
+                    <div class="col" th:text="${factura.vendedor.codVendedor}"></div>
+                    <div class="col" th:text="${factura.valorFactura}"></div>
                 </div>
             </div>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     </body>
-
 </html>

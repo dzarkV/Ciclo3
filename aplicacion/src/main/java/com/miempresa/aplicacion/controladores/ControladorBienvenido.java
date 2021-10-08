@@ -4,10 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class ControladorHolaMundo {
+public class ControladorBienvenido {
     
-    @GetMapping("/HolaMundo") //path del controlador
-    public String holaMundo(){
-        return "vistaHolaMundo";
+    @GetMapping("/bienvenido") //path del controlador
+    public String bienvenido(){
+        return "vistaBienvenido";
     }
 }
