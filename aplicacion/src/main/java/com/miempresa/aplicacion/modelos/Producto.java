@@ -17,8 +17,8 @@ import lombok.ToString;
 @Table(name = "t_productos")
 public class Producto {
 
-    @Getter @Setter @Id 
-    @Column(name = "cod_producto")
+    @Getter 
+    @Setter @Id @Column(name = "cod_producto")
     private String codProducto;
 
     @Getter

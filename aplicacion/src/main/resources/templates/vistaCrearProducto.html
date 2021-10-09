@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
+        <title>Productos</title>
+        <meta charset="UTF-8"> </meta>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"/>
+    </head>
+    <body>
+        <div style="overflow: hidden;"><!--Overflow para evitar errores de posicionamiento float-->
+            <div style="font-size: 12px; font-family:'Arial';float: left;"><!--Reloj-->
+                <script type="text/javascript">
+                    var d=new Date();
+                    document.write('Fecha: '+d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear()+'   '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds());
+                    </script>
+            </div>
+            <div style="display: flex;float: right;">
+                <div style="display: flex; margin-right: 40px;"><!--Botones Factura y Usuario-->
+                    <a href="vistaVendedor.html" ><button type="submit" >Ir a factura</button></a>
+                    <a href="localhost:8081/vendedores"><button type="submit" >Ir a Usuarios</button></a>
+                </div> 
+                <div style="display: flex;margin-right: 40px;"><!--Foto usuario, Nombre y Código-->
+                    <img src="https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png"
+                        alt="" height="60px" width="60px"></img>
+                    <p>Nombre Usuario<br>Código</p>
+                </div>
+            </div>
+        </div> 
+        <br>
+        <div style="text-align: center;"><!--Formulario CRUD para los productos-->
+            <form th:action = "@{/crear/producto}" th:object="${producto}" method="post">
+                <label> Código del Producto </label>
+                <input id = "codigoproducto" type="text" th:field ="*{codProducto}" style="width:10% ; margin-right: 5%; margin-left: 10px;"/>
+                <label> Nombre del Producto </label>
+                <input id = "nombreproducto" type="text" th:field = "*{nombreProducto}"style="width:20% ; margin-left: 10px;"/> <br/><br/>
+                <label> Descripción Producto</label>
+                <input id = "descripcionproducto" type="text" th:field = "*{descripcionProducto}"style="width:20% ; margin-right: 5%; margin-left: 10px;"/> 
+                <label> Precio del Producto ($)</label>
+                <input id = "precioproducto" type="text" th:field = "*{precioProducto}"style="width:10% ; margin-left: 10px;"/>             
+                <br/> <br/>               
+                <button type = "submit">Agregar Producto</button>
+                <button type = "submit">Actualizar Producto</button>
+                <button type = "submit">Eliminar Producto</button>
+            </form>
+        </div>
+        <br>
+        <h3>Lista de Productos</h3>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col"><strong>Código</strong></div>
+                    <div class="col"><strong>Nombre de producto</strong></div>
+                    <div class="col"><strong>Descripción</strong></div>
+                    <div class="col"><strong>Precio</strong></div>
+                </div>
+            </div>
+        </div>
+        <div class="card" th:each="producto: ${productos}">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col" th:text="${producto.codProducto}"></div>
+                    <div class="col" th:text="${producto.nombreProducto}"></div>
+                    <div class="col" th:text="${producto.descripcionProducto}"></div>
+                    <div class="col" th:text="${producto.precioProducto}"></div>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
