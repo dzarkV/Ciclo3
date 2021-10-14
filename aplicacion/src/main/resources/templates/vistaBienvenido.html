@@ -1,12 +1,63 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
         <title>Bienvenido</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body{
+                margin: 0;
+                padding: 0; 
+                font-family: sans-serif;
+                background-size: cover;
+                background: #2a4480;
+            }
+            .box{
+                width: 300px;
+                padding: 40px;
+                position: absolute;
+                top: 50%; 
+                left: 50%;
+                transform: translate(-50%,-50%);
+                background: #191919;
+                text-align: center;
+                border-radius: 10px;
+            }
+            .box h1{
+                color: white;
+                text-transform: uppercase;
+                font-weight: 500;
+                font-size: larger;
+            }
+
+            .box button{
+                background: none; 
+                display: block;
+                margin: 20px auto;
+                text-align: center;
+                border: 2px solid #3498db;
+                padding: 14px 10px;
+                width: 200px;
+                outline: none;
+                color: white;
+                border-radius: 24px;
+                transition: 0.25s;
+            }
+            .box button:hover{
+                width: 280px;
+                border-color: #2ecc71;
+            }
+            
+        </style>
     </head>
-    <body>
-        <h1 style="text-align: center">!Bienvenido al Sistema de facturación!</h1>
+    <body>  
+        <div class="box" >
+            <h1>!Bienvenido al Sistema de facturación!</h1>
+            <a href="/facturas"><button type="submit" >Ventas</button></a>
+            <a href="/vendedores"><button type="submit" >Vendedores</button></a>
+            <a href="/productos"><button type="submit" >Productos</button></a>
+        </div>
     </body>
 </html>

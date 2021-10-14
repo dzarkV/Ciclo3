@@ -22,4 +22,8 @@ public class Vendedor {
     @Getter 
     @Setter @Column(name = "nombre_vendedor")  
     private String nombreVendedor;
+
+    public boolean contains(String ven) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

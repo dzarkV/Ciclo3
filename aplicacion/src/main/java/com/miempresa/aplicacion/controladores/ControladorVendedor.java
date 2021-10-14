@@ -16,14 +16,7 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ControladorVendedor {
     
-    private final RepositorioVendedor repositorioVendedor;
-    
-    @GetMapping("/vendedores") //path del controlador
-    public String getTodosLosVendedores(Model model){
-        Iterable<Vendedor> vendedores = repositorioVendedor.findAll();
-        model.addAttribute("vendedores",vendedores);
-        return "vistaVendedor";
-    }    
+    private final RepositorioVendedor repositorioVendedor;    
     
     @GetMapping("/vendedores/{codigoVendedor}") //path del controlador
     public String getVendedorById(@PathVariable String codigoVendedor, Model model){
@@ -32,20 +25,21 @@ public class ControladorVendedor {
         return "vistaVendedor";
     }
     
-    @GetMapping("/crear/vendedor") //path del controlador
+    @GetMapping("/vendedores") //path del controlador
     public String crearVendedor(Model model){
-        
+        Iterable<Vendedor> vendedores = repositorioVendedor.findAll();
+        model.addAttribute("vendedores",vendedores);
         model.addAttribute("vendedor",new Vendedor());
         return "vistaCrearVendedor";
     }   
     
-    @PostMapping("/crear/vendedor")
+    @PostMapping("/vendedores")
     public RedirectView procesarVendedor(@ModelAttribute Vendedor vendedor){
        Vendedor vendedorGuardado = repositorioVendedor.save(vendedor);
        if (vendedorGuardado == null){
-           return new RedirectView("/crear/vendedor/",true);
+           return new RedirectView("/vendedores",true);
        }
-       return new RedirectView("/vendedores/"+vendedorGuardado.getCodVendedor(),true);
+       return new RedirectView("/vendedores");
     }
     
 }

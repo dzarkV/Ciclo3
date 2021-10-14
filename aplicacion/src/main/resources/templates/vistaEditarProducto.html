@@ -1,26 +1,33 @@
 <!DOCTYPE html>
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-
     <head>
-        <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
-        <title>Consultar Vendedores</title>
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
+        <title>Editar Productos</title>
+        <meta charset="UTF-8"> </meta>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"/>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
         <style>
-            body h3{font-family: Nunito;font-weight: 800;}
-            .box{overflow: hidden;}
+            body{font-family: Nunito;}
+            .box{overflow: hidden;margin-top:5px;}
             .caja_reloj{float: left;}
-            .reloj{font-size: 12px;display: flex; font-family: Nunito;}
-            .titulo_boton{overflow: hidden;}
-            .titulo_boton h3{float: left;}
-            .titulo_boton button{float: right;background: none;border-radius: 4px; border: 2px solid #000;margin-right: 40px; padding: 4px 10px;}
+            .reloj{font-size: 12px;display: flex;}
+            .boton_user{display: flex;float: right;}
+            .boton_user div{display: flex; margin-right: 40px;}
+            .boton_user div button{margin-left:10px;background: none;border: 2px solid #000; border-radius: 10px;padding: 6px 10px;}
+            .boton_user div button:hover{background: #c5c3c39f;}
+            #codigoproducto,#precioproducto{width:10% ; margin-right: 5%; margin-left: 10px;}
+            #nombreproducto,#descripcionproducto{width:20% ; margin-right: 5%; margin-left: 10px;}
+            .crud{text-align: center;}
+            .crud input{border-radius: 4px; border: 1px solid #000;}
+            .crud button{background: none;border-radius: 4px; border: 2px solid #000;margin-left: 10px; padding: 4px 10px;}
+            .row button{background: none;border-radius: 4px; border: 2px solid #000;padding: 0px 10px;margin-top: 2px;}
         </style>
+            
     </head>
-
     <body>
-        <div class="box">
+        <div class="box"><!--Overflow para evitar errores de posicionamiento float-->
             <div class="caja_reloj">
                 <div class="reloj"><!--Reloj-->
                     <p>Fecha: &nbsp;</p>
@@ -77,29 +84,26 @@
                     var intervalo=setInterval(fecha,1000);
                 </script>
             </div>
-        </div>
-        <div class="titulo_boton"> 
-            <h3>Listado de Vendedores</h3>
-            <a href="/vendedores"><button>Volver</button></a>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col"><strong>Código</strong></div>
-                    <div class="col"><strong>Nombre Vendedor</strong></div>
+            <div class="boton_user">
+                <div style="border:2px solid #000;border-radius: 10px;padding: 5px 10px 2px;"><!--Foto usuario, Nombre y Código-->
+                    <img src="https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png"
+                        alt="" height="60px" width="60px"></img>
+                    <p>Nombre Usuario<br>Código</p>
                 </div>
             </div>
+        </div> 
+        <br>
+        <div class="crud"><!--Formulario CRUD para los productos-->
+            <form th:action = "@{/productos}" th:object="${producto}" method="post">
+                <label> Código del Producto </label>
+                <input id = "codigoproducto" type="text" th:field ="*{codProducto}" />
+                <label> Nombre del Producto </label>
+                <input id = "nombreproducto" type="text" th:field = "*{nombreProducto}"/> <br/><br/>
+                <label> Descripción Producto</label>
+                <input id = "descripcionproducto" type="text" th:field = "*{descripcionProducto}"/> 
+                <label> Precio del Producto ($)</label>
+                <input id = "precioproducto" type="text" th:field = "*{precioProducto}"/>             
+                <br/> <br/>               
+                <button type = "submit">Actualizar Producto</button>
+            </form>
         </div>
-        <div class="card" th:each="vendedor: ${vendedores}">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col" th:text="${vendedor.codVendedor}"></div>
-                    <div class="col" th:text="${vendedor.nombreVendedor}"></div>
-                </div>
-            </div>
-        </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-    </body>
-
-</html>

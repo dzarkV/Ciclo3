@@ -3,25 +3,132 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
         <title>Cear Factura</title>
         <meta charset="UTF-8"> </meta>
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"/>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
+        <style>
+            body{font-family: Nunito;}
+            .box{overflow: hidden;margin-top:5px;}
+            .caja_reloj{float: left;}
+            .reloj{font-size: 12px;display: flex;}
+            .boton_user{display: flex;float: right;}
+            .boton_user div{display: flex; margin-right: 40px;}
+            .boton_user button{margin-right:40px;background: none;border: 2px solid #000; border-radius: 10px;padding: 6px 10px;}
+            .boton_user button:hover{background: #c5c3c39f;}
+            .crud{text-align: center;}
+            .crud label{margin-right: 10px;}
+            #numerofactura,#codigoproducto{margin-right: 3%;}
+            #codigovendedor,#valorfactura{margin-right: 7%;}
+            .crud input{border-radius: 4px; border: 1px solid #000;}
+            .crud button{background: none;border-radius: 4px; border: 2px solid #000;margin-left: 10px; padding: 4px 10px;}
+        </style>
     </head>
     <body>
-        <h1>Forma para creación de Factura</h1>
-        <form th:action = "@{/crear/factura}" th:object="${factura}" method="post">
-            <label> Número de factura </label>
-            <input id = "numerofactura" type="text" th:field ="*{numeroFactura}"/>
-            <label> Código del Producto </label>
-            <input id = "codigoproducto" type="text" th:field ="*{codigoProducto}"/>
-            <label> Fecha de venta  </label>
-            <input id = "fecha" type="date" th:field = "*{fechaVenta}"/> <br/><br/>
-            <label> Código del Vendedor</label>
-            <input id = "codigovendedor" type="text" th:field = "*{codigoVendedor}"/> 
-            <label> Precio del Producto ($)</label>
-            <input id = "valorfactura" type="text" th:field = "*{valorFactura}"/>             
-            <br/> <br/>               
-            <button type = "submit">Agregar Factura</button>
-        </form>
+        <div class="box"><!--Overflow para evitar errores de posicionamiento float-->
+            <div class="caja_reloj">
+                <div class="reloj"><!--Reloj-->
+                    <p>Fecha: &nbsp;</p>
+                    <p id="dia"></p>
+                    <p>/</p>
+                    <p id="mes"></p>
+                    <p>/</p>
+                    <p id="year"></p>
+                    <p>  &nbsp;</p>
+                    <p id="horas"></p>
+                    <p>:</p>
+                    <p id="minutos"></p>
+                    <p>:</p>
+                    <p id="segundos"></p>
+                    <p>  &nbsp;</p>
+                    <p id="ampm"> </p>
+                </div>
+                <script type="text/javascript">
+                    var fecha=function(){
+                        var d=new Date(),
+                        dia=+d.getDate(),
+                        mes=d.getMonth()+1,
+                        year=d.getFullYear(),
+                        horas=d.getHours(),
+                        minutos=d.getMinutes(),
+                        segundos=d.getSeconds(),
+                        ampm;
+        
+                    var pDia=document.getElementById("dia"),
+                        pMes=document.getElementById("mes"),
+                        pYear=document.getElementById("year"),
+                        pHoras=document.getElementById("horas"),
+                        pMinutos=document.getElementById("minutos"),
+                        pSegundos=document.getElementById("segundos"),
+                        pAmpm=document.getElementById("ampm");
+        
+                    if (d.getDate()<10){ dia='0'+d.getDate();}
+                    if(d.getMonth()<9){mes='0'+(d.getMonth()+1);}
+                    if(d.getHours()<10){horas='0'+d.getHours();ampm=' AM';}
+                    if(d.getHours()==12){ampm=' PM'}
+                    if(d.getHours()>12){horas='0'+d.getHours()-12;ampm=' PM'}
+                    if(d.getMinutes()<10){minutos='0'+d.getMinutes();}
+                    if(d.getSeconds()<10){segundos='0'+d.getSeconds();}
+        
+                    pDia.textContent=dia;
+                    pMes.textContent=mes;
+                    pYear.textContent=year;
+                    pHoras.textContent=horas;
+                    pMinutos.textContent=minutos;
+                    pSegundos.textContent=segundos;
+                    pAmpm.textContent=ampm;
+                    };
+                    fecha();
+                    var intervalo=setInterval(fecha,1000);
+                </script>
+            </div>
+            <div class="boton_user"><!--Botones Factura y Usuario-->
+                <a href="/productos" ><button type="submit" >Ir a Productos</button></a>
+                <a href="/vendedores"><button type="submit" >Ir a Usuarios</button></a>
+            </div> 
+        </div> 
+        <br>
+        <div class="crud">
+            <form th:action = "@{/facturas}" th:object="${factura}" method="post">
+                <label> Número de factura </label>
+                <input id = "numerofactura" type="text" th:field ="*{numeroFactura}"/>
+                <label> Código del Producto </label>
+                <input id = "codigoproducto" type="text" th:field ="*{codigoProducto}"/>
+                <label> Fecha de venta  </label>
+                <input id = "fecha" type="date" th:field = "*{fechaVenta}"/> <br/><br/>
+                <label> Código del Vendedor</label>
+                <input id = "codigovendedor" type="text" th:field = "*{codigoVendedor}"/> 
+                <label> Precio del Producto ($)</label>
+                <input id = "valorfactura" type="text" th:field = "*{valorFactura}"/>             
+                <br/> <br/>               
+                <button type = "submit">Agregar Factura</button>
+            </form>
+        </div>
+        <h3>Lista de Facturas</h3>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col"><strong>No.Fac</strong></div>
+                    <div class="col"><strong>Cod.Prod</strong></div>
+                    <div class="col"><strong>Fecha</strong></div>
+                    <div class="col"><strong>Cod.Vend</strong></div>
+                    <div class="col"><strong>Valor.Facura</strong></div>
+                </div>
+            </div>
+        </div>
+        <div class="card" th:each="factura: ${facturas}">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col" th:text="${factura.numeroFactura}"></div>
+                    <div class="col" th:text="${factura.producto.codProducto}"></div>
+                    <div class="col" th:text="${factura.fechaVenta}"></div>
+                    <div class="col" th:text="${factura.vendedor.codVendedor}"></div>
+                    <div class="col" th:text="${factura.valorFactura}"></div>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
