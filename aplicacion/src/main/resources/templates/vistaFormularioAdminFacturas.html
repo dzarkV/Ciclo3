@@ -3,8 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-    <title>Listado Vendedores</title>
+    <title>Cear Factura</title>
     <meta charset="UTF-8">
     </meta>
     <link rel="stylesheet"
@@ -131,7 +130,7 @@
         </div>
         <div id="boton_user">
             <!--Botones Factura y Usuario-->
-            <a href="/facturas"><button type="submit" class="boton">Ir a factura</button></a>
+            <a href="/vendedores"><button type="submit" class="boton">Ir a Usuarios</button></a>
             <a href="/productos"><button type="submit" class="boton">Ir a Productos</button></a>
             <div class="salir">
                 <ul>
@@ -153,46 +152,76 @@
             </div>
         </div>
     </div>
-    <br>
-    <!--Espacios para crear vendedores-->
-    <div class="crud">
-        <form th:action="@{/vendedores}" th:object="${vendedor}" method="post">
+        <h1>Busqueda de Facturas/informes</h1>
+        <form th:action="@{/consultar/factura}" th:object="${factura}" method="post">
+            <label> Número de factura </label>
+            <input id="numerofactura" type="text" th:field="*{numeroFactura}" />
             <label> Código del Vendedor</label>
-            <input id="codigovendedor" type="text" th:field="*{codVendedor}" required />
-            <label> Nombre del Vendedor</label>
-            <input id="nombrevendedor" type="text" th:field="*{nombreVendedor}" required /><br><br>
-            <label> Rol </label>
-            <input id="nombrevendedor" type="text" th:field="*{rolVendedor}" required />
-            <label> Contraseña</label>
-            <input id="nombrevendedor" type="text" th:field="*{passVendedor}" required />
-            <button type="submit">Agregar Vendedor</button>
+            <input id="codigovendedor" type="text" th:field="*{codigoVendedor}" />
+            <br /> <br />
+            <button type="submit">Consultar</button>
         </form>
-    </div>
-    <br>
-    <br>
-    <h3>Listado de Vendedores</h3>
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col"><strong>Código</strong></div>
-                <div class="col"><strong>Nombre Vendedor</strong></div>
-                <div class="col"><strong>Rol</strong></div>
-                <div class="col"><strong>Contraseña</strong></div>
+        <h1>Eliminacion de Facturas</h1>
+        <form th:action="@{/facturas/Borrar}" th:object="${factura}" method="post">
+            <label> Número de factura </label>
+            <input id="numerofactura" type="text" th:field="*{numeroFactura}" />
+            <br /> <br />
+            <button type="submit">Eliminar</button>
+        </form>
+        <h1>Forma para creación de Factura</h1>
+        <form th:action="@{/crear/factura}" th:object="${factura}" method="post">
+            <label> Número de factura </label>
+            <input id="numerofactura" type="text" th:field="*{numeroFactura}" required />
+            <label> Código del Producto </label>
+            <input id="codigoproducto" type="text" th:field="*{codigoProducto}" required />
+            <label> Fecha de venta </label>
+            <input id="fecha" type="date" th:field="*{fechaVenta}" required /> <br /><br />
+            <label> Código del Vendedor</label>
+            <input id="codigovendedor" type="text" th:field="*{codigoVendedor}" required />
+            <label> Precio del Producto ($)</label>
+            <input id="valorfactura" type="text" th:field="*{valorFactura}" required />
+            <br /> <br />
+            <button type="submit">Agregar Factura</button>
+        </form>
+        <h1>Formulario edicion de facturas</h1>
+        <form th:action="@{/facturas/Modificar}" th:object="${factura}" method="post">
+            <label> Número de factura </label>
+            <input id="numerofactura" type="text" th:field="*{numeroFactura}" />
+
+            <label> Código del Producto </label>
+            <input id="codigoproducto" type="text" th:field="*{codigoProducto}" />
+
+            <label> Precio del Producto ($)</label>
+            <input id="valorfactura" type="text" th:field="*{valorFactura}" />
+            <br /> <br />
+            <button type="submit">Editar Factura</button>
+        </form>
+        <h3>Lista de Facturas</h3>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col"><strong>No.Fac</strong></div>
+                    <div class="col"><strong>Cod.Prod</strong></div>
+                    <div class="col"><strong>Fecha</strong></div>
+                    <div class="col"><strong>Cod.Vend</strong></div>
+                    <div class="col"><strong>Valor.Facura</strong></div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="card" th:each="vendedor: ${vendedores}">
-        <div class="card-body">
-            <div class="row">
-                <div class="col" th:text="${vendedor.codVendedor}"></div>
-                <div class="col" th:text="${vendedor.nombreVendedor}"></div>
-                <div class="col" th:text="${vendedor.rolVendedor}"></div>
-                <div class="col" th:text="${vendedor.passVendedor}"></div>
+        <div class="card" th:each="factura: ${facturas}">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col" th:text="${factura.numeroFactura}"></div>
+                    <div class="col" th:text="${factura.producto.codProducto}"></div>
+                    <div class="col" th:text="${factura.fechaVenta}"></div>
+                    <div class="col" th:text="${factura.vendedor.codVendedor}"></div>
+                    <div class="col" th:text="${factura.valorFactura}"></div>
+                </div>
             </div>
         </div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

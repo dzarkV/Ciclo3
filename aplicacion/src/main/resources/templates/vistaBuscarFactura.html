@@ -1,26 +1,26 @@
 <!DOCTYPE html>
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-
     <head>
-        <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
-        <title>Consultar Vendedores</title>
+        <title>Busqueda Facturas</title>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"/>
         <style>
-            body h3{font-family: Nunito;font-weight: 800;}
-            .box{overflow: hidden;}
+            body{font-family: Nunito;}
+            .box{overflow: hidden;margin-top:5px;}
             .caja_reloj{float: left;}
-            .reloj{font-size: 12px;display: flex; font-family: Nunito;}
-            .titulo_boton{overflow: hidden;}
-            .titulo_boton h3{float: left;}
-            .titulo_boton button{float: right;background: none;border-radius: 4px; border: 2px solid #000;margin-right: 40px; padding: 4px 10px;}
+            .reloj{font-size: 12px;display: flex;}
+            .boton_user{display: flex;float: right;}
+            .boton_user div{display: flex; margin-right: 40px;}
+            .principal{text-align: center;}
+            .principal label{margin-right: 5px;}
+            .principal input{border: 1px solid#000; border-radius: 4px;height: 20px;margin-right: 40px;}
+            .principal button{border: 2px solid #000; border-radius: 8px; padding: 6px 10px; background: none;}
         </style>
     </head>
-
     <body>
-        <div class="box">
+        <div class="box"><!--Overflow para evitar errores de posicionamiento float-->
             <div class="caja_reloj">
                 <div class="reloj"><!--Reloj-->
                     <p>Fecha: &nbsp;</p>
@@ -77,33 +77,25 @@
                     var intervalo=setInterval(fecha,1000);
                 </script>
             </div>
-        </div>
-        <div class="titulo_boton"> 
-            <h3>Listado de Vendedores</h3>
-            <a href="/vendedores"><button>Volver</button></a>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col"><strong>Código</strong></div>
-                    <div class="col"><strong>Nombre Vendedor</strong></div>
-                    <div class="col"><strong>Rol</strong></div>
-                    <div class="col"><strong>Contraseña</strong></div>
+            <div class="boton_user"><!--Botones Factura y Usuario-->
+                <div style="border:2px solid #000;border-radius: 10px;padding: 5px 10px 2px;"><!--Foto usuario, Nombre y Código-->
+                    <img src="https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png"
+                        alt="" height="60px" width="60px"></img>
+                    <p>Nombre Administrador<br>Código</p>
                 </div>
-            </div>
+            </div> 
         </div>
-        <div class="card" th:each="vendedor: ${vendedores}">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col" th:text="${vendedor.codVendedor}"></div>
-                    <div class="col" th:text="${vendedor.nombreVendedor}"></div>
-                    <div class="col" th:text="${vendedor.rolVendedor}"></div>
-                    <div class="col" th:text="${vendedor.passVendedor}"></div>
-                </div>
-            </div>
-        </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-    </body>
+        <br>
+        <h3>Ingrese el valor a buscar</h3> 
+        <div class="principal">
+            <form th:action="@{/facturas/buscar}" th:object="${factura}" method="post">
+                <label>Número de la Factura</label>
+                <input type="text" id="numeroFactura" th:field="*{numeroFactura}"><br><p>o</p>
+                <label>Código del vendedor</label>
+                <input type="text" id = "codigovendedor" th:field = "*{codigoVendedor}"><br><br>
+                <button type="submit">Buscar</button>
 
+            </form>
+        </div>
+    </body>
 </html>
