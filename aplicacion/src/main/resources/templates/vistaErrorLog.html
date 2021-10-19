@@ -3,9 +3,62 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
+        <title>Bienvenido Admin</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body{
+                margin: 0;
+                padding: 0; 
+                font-family: sans-serif;
+                background-size: cover;
+                background: #2a4480;
+            }
+            .box{
+                width: 300px;
+                padding: 40px;
+                position: absolute;
+                top: 50%; 
+                left: 50%;
+                transform: translate(-50%,-50%);
+                background: #191919;
+                text-align: center;
+                border-radius: 10px;
+            }
+            .box h1, h3{
+                color: white;
+                text-transform: uppercase;
+                font-weight: 700;
+                font-size: larger;
+            }
+            .box a{text-decoration: none;}
+
+            .box button{
+                background: none; 
+                display: block;
+                margin: 20px auto;
+                text-align: center;
+                border: 2px solid #3498db;
+                padding: 14px 10px;
+                width: 200px;
+                color: white;
+                border-radius: 24px;
+                transition: 0.25s;
+            }
+            .box button:hover{
+                width: 280px;
+                border-color: #2ecc71;
+            }
+            
+        </style>
     </head>
-    <body>
-        <h1>Error al ingresar<br>Intente nuevamente</h1>
+    <body>  
+        <div class="box" >
+            <h1>No se pudo Ingresar</h1>
+            <br>
+            <h3>Por favor intentelo Nuevamente</h3>
+            <br>
+            <a href="/"><button type="submit">Regresar</button></a>
+        </div>
     </body>
 </html>

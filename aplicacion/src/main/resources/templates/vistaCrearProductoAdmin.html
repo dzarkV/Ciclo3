@@ -4,32 +4,72 @@
       xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
-        <title>Listado Facturas</title>
+        <title>Productos</title>
         <meta charset="UTF-8"> </meta>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"/>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
         <style>
-            body h3{font-family: Nunito;font-weight: 800;}
-            .box{overflow: hidden;}
-            .caja_reloj{float: left;}
-            .reloj{font-size: 12px;display: flex; font-family: Nunito;}
-            .titulo_boton{overflow: hidden;}
-            .titulo_boton h3{float: left;}
-            .titulo_boton > div{float:right;}
-            .titulo_boton button{float: right;background: none;border-radius: 4px; border: 2px solid #000;margin-right: 20px; padding: 4px 10px;}
+            body {font-family: 'Nunito';}
+    
+            .box {
+                overflow: hidden;
+                margin-top: 5px;
+            }
+    
+            .caja_reloj {float: left;}
+    
+            .reloj {
+                font-size: 12px;
+                display: flex;
+            }
+    
+            #boton_user {
+                display: flex;
+                float: right;
+            }
+    
+            .boton {
+                margin-right: 20px;
+                background: none;
+                border: 2px solid #000;
+                border-radius: 10px;
+                padding: 6px 10px;
+            }
+            .boton:hover {background: #c5c3c39f;}
+    
             .salir ul, ol {list-style: none;}
             .salir li ul{display: none; position: absolute;}
             .salir li:hover > ul{display: block;}
             .salir button{background: none; border:none;}
+    
+            .crud {text-align: center;}
+    
+            .crud input {
+                border-radius: 4px;
+                border: 1px solid #000;
+                margin-left: 10px;
+                margin-right: 5%;
+            }
+    
+            .crud button {
+                background: none;
+                border-radius: 4px;
+                border: 2px solid #000;
+                margin-left: 10px;
+                padding: 4px 10px;
+            }
+    
             .nombre {
                 margin: 10px;
                 font-size: small;
-                font-weight: bolder;}
+                font-weight: bolder;
+            }
+            .row button{border:2px solid #000;border-radius: 4px; margin-top: 5px;}
         </style>
+            
     </head>
-    
     <body>
-        <div class="box">
+        <div class="box"><!--Overflow para evitar errores de posicionamiento float-->
             <div class="caja_reloj">
                 <div class="reloj"><!--Reloj-->
                     <p>Fecha: &nbsp;</p>
@@ -86,14 +126,14 @@
                     var intervalo=setInterval(fecha,1000);
                 </script>
             </div>
-        </div>
-        <div class="titulo_boton">
-            <h3>Lista de Facturas</h3>
-            <div>
+            <div id="boton_user">
+                <!--Botones Factura y Usuario-->
+                <a href="/vendedores"><button type="submit" class="boton">Ir a Usuarios</button></a>
+                <a href="/facturasA"><button type="submit" class="boton">Ir a Facturas</button></a>
                 <div class="salir">
                     <ul>
                         <li>
-                            <div style="display:flex;border:2px solid #000;border-radius: 10px;padding: 5px 10px 2px; margin-right: 10px;">
+                            <div style="display:flex;border:2px solid #000;border-radius: 10px;padding: 5px 10px 2px;">
                                 <!--Foto usuario, Nombre y Código-->
                                 <img src="https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png"
                                     alt="" height="60px" width="60px"></img>
@@ -109,28 +149,46 @@
                     </ul>
                 </div>
             </div>
-            <a href="/volverF"><button>Volver</button></a>
+        </div> 
+        <br>
+        <div class="crud"><!--Formulario CRUD para los productos-->
+            <form th:action = "@{/productos}" th:object="${producto}" method="post">
+                <label> Código del Producto </label>
+                <input id = "codigoproducto" type="text" th:field ="*{codProducto}" />
+                <label> Nombre del Producto </label>
+                <input id = "nombreproducto" type="text" th:field = "*{nombreProducto}"/> <br/><br/>
+                <label> Descripción Producto</label>
+                <input id = "descripcionproducto" type="text" th:field = "*{descripcionProducto}"/> 
+                <label> Precio del Producto ($)</label>
+                <input id = "precioproducto" type="text" th:field = "*{precioProducto}"/>             
+                <br/> <br/>               
+                <button type = "submit">Agregar Producto</button>
+            </form>
         </div>
         <br>
+        <h3>Lista de Productos</h3>
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col"><strong>No.Fac</strong></div>
-                    <div class="col"><strong>Cod.Prod</strong></div>
-                    <div class="col"><strong>Fecha</strong></div>
-                    <div class="col"><strong>Cod.Vend</strong></div>
-                    <div class="col"><strong>Valor.Facura</strong></div>
+                    <div class="col"><strong>Código</strong></div>
+                    <div class="col"><strong>Nombre de producto</strong></div>
+                    <div class="col"><strong>Descripción</strong></div>
+                    <div class="col"><strong>Precio</strong></div>
+                    <div class="col"><strong>Acción</strong></div>
                 </div>
             </div>
         </div>
-        <div class="card" th:each="factura: ${facturas}">
+        <div class="card" th:each="producto: ${productos}">
             <div class="card-body">
                 <div class="row">
-                    <div class="col" th:text="${factura.numeroFactura}"></div>
-                    <div class="col" th:text="${factura.producto.codProducto}"></div>
-                    <div class="col" th:text="${factura.fechaVenta}"></div>
-                    <div class="col" th:text="${factura.vendedor.codVendedor}"></div>
-                    <div class="col" th:text="${factura.valorFactura}"></div>
+                    <div class="col" th:text="${producto.codProducto}"></div>
+                    <div class="col" th:text="${producto.nombreProducto}"></div>
+                    <div class="col" th:text="${producto.descripcionProducto}"></div>
+                    <div class="col" th:text="${producto.precioProducto}"></div>
+                    <div class="col">
+                        <a th:href="@{/productos/editar/} + ${producto.codProducto}"><button>Editar</button></a><br>
+                        <a th:href="@{/productos/confirmar/eliminar(codProducto= ${producto.codProducto})}"><button>Eliminar</button></a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -30,6 +30,18 @@ public class ControladorFactura {
     private final RepositorioVendedor repositorioVendedor;
     private final RepositorioLogin repositorioLogin;
     
+    @GetMapping("/volverF")
+    public RedirectView volver(Model model){
+        Iterable<Login> login=repositorioLogin.findAll();
+        ArrayList<String> cod=new ArrayList();
+        for(Login i:login){cod.add(i.getRolUser());}
+        Object[] codigo= cod.toArray();
+        if (codigo[codigo.length-1].equals("VENDEDOR")){
+            return new RedirectView("/facturasV",true);
+        }
+        return new RedirectView("/facturasA");
+    }
+    
     
     @GetMapping("/facturasA") //path del controlador
     public String getTodasLasFacturasA(Model model){
@@ -49,12 +61,28 @@ public class ControladorFactura {
     @GetMapping("/facturas") //path del controlador
     public String getTodasLasFacturas(Model model){
         Iterable<Factura> facturas = repositorioFactura.findAll();
+        Iterable<Login> login=repositorioLogin.findAll();
+        ArrayList<String> cod=new ArrayList();
+        ArrayList<String> nom=new ArrayList();
+        for(Login i:login){cod.add(i.getRolUser());nom.add(i.getNombreUser());}
+        Object[] codigo= cod.toArray();
+        Object[] nombre= nom.toArray();
+        model.addAttribute("nombre", nombre[nombre.length-1]);
+        model.addAttribute("rol", codigo[codigo.length-1]);
         model.addAttribute("facturas",facturas);
         return "vistaFactura";
     }    
     
     @GetMapping("/facturas/{numeroFactura}") //path del controlador
     public String getFacturaByNumero(@PathVariable String numeroFactura, Model model){
+        Iterable<Login> login=repositorioLogin.findAll();
+        ArrayList<String> cod=new ArrayList();
+        ArrayList<String> nom=new ArrayList();
+        for(Login i:login){cod.add(i.getRolUser());nom.add(i.getNombreUser());}
+        Object[] codigo= cod.toArray();
+        Object[] nombre= nom.toArray();
+        model.addAttribute("nombre", nombre[nombre.length-1]);
+        model.addAttribute("rol", codigo[codigo.length-1]);
         Factura factura = repositorioFactura.findByNumeroFactura(numeroFactura);
         model.addAttribute("facturas",factura);
         return "vistaFactura";
@@ -68,9 +96,9 @@ public class ControladorFactura {
     }   
    
     @GetMapping("/consultar/factura") //path del controlador
-    public String findFactura(Model model){
+    public RedirectView findFactura(Model model){
         model.addAttribute("factura",new FacturaDto());
-        return "vistaFormularioAdminFacturas";
+        return new RedirectView("/facturasA",true);
     }
     
     @PostMapping("/consultar/factura") //path del controlador
@@ -135,6 +163,7 @@ public class ControladorFactura {
        {
             Producto producto = repositorioProducto.findByCodProducto(facturaDto.getCodigoProducto());
             Vendedor vendedor = repositorioVendedor.findByCodVendedor(facturaDto.getCodigoVendedor());
+             if (producto == null || vendedor ==null){return new RedirectView("/facturasA");}
             Factura factura = new Factura();
             factura.setNumeroFactura(facturaDto.getNumeroFactura());
             factura.setProducto(producto);
@@ -172,10 +201,10 @@ public class ControladorFactura {
     }
     
      @GetMapping("/facturas/Borrar") //path del controlador
-    public String findFacturab(Model model)
+    public RedirectView findFacturab(Model model)
     {
         model.addAttribute("factura",new FacturaDto());
-        return "vistaFormularioAdminFacturas";
+        return new RedirectView("/facturasA",true);
     }
     @PostMapping("/facturas/Borrar") //path del controlador
     public String borrarFacturaV(@ModelAttribute FacturaDto factura, Model model){
@@ -284,6 +313,7 @@ public class ControladorFactura {
        {
             Producto producto = repositorioProducto.findByCodProducto(facturaDto.getCodigoProducto());
             Vendedor vendedor = repositorioVendedor.findByCodVendedor(facturaDto.getCodigoVendedor());
+            if (producto == null || vendedor ==null){return new RedirectView("/facturasV");}
             Factura factura = new Factura();
             factura.setNumeroFactura(facturaDto.getNumeroFactura());
             factura.setProducto(producto);
@@ -320,9 +350,9 @@ public class ControladorFactura {
        
     }
     @GetMapping("/consultar/facturaV") //path del controlador
-    public String findFacturaV(Model model){
+    public RedirectView findFacturaV(Model model){
         model.addAttribute("factura",new FacturaDto());
-        return "vistaFacturaV";
+        return new RedirectView("/facturasV");
     }
     
     @PostMapping("/consultar/facturaV") //path del controlador
@@ -374,7 +404,7 @@ public class ControladorFactura {
             }
             else
             {
-                return "redirect:/consultar/facturaV";
+                return "redirect:/facturasV";
             }
         }
         

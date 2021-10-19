@@ -9,20 +9,61 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"/>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
         <style>
-            body{font-family: Nunito;}
-            .box{overflow: hidden;margin-top:5px;}
-            .caja_reloj{float: left;}
-            .reloj{font-size: 12px;display: flex;}
-            .boton_user{display: flex;float: right;}
-            .boton_user div{display: flex; margin-right: 40px;}
-            .boton_user button{margin-right:40px;background: none;border: 2px solid #000; border-radius: 10px;padding: 6px 10px;}
-            .boton_user button:hover{background: #c5c3c39f;}
-            #codigoproducto,#precioproducto{width:10% ; margin-right: 5%; margin-left: 10px;}
-            #nombreproducto,#descripcionproducto{width:20% ; margin-right: 5%; margin-left: 10px;}
-            .crud{text-align: center;}
-            .crud input{border-radius: 4px; border: 1px solid #000;}
-            .crud button{background: none;border-radius: 4px; border: 2px solid #000;margin-left: 10px; padding: 4px 10px;}
-            .row button{background: none;border-radius: 4px; border: 2px solid #000;padding: 0px 10px;margin-top: 2px;}
+            body {font-family: 'Nunito';}
+    
+            .box {
+                overflow: hidden;
+                margin-top: 5px;
+            }
+    
+            .caja_reloj {float: left;}
+    
+            .reloj {
+                font-size: 12px;
+                display: flex;
+            }
+    
+            #boton_user {
+                display: flex;
+                float: right;
+            }
+    
+            .boton {
+                margin-right: 20px;
+                background: none;
+                border: 2px solid #000;
+                border-radius: 10px;
+                padding: 6px 10px;
+            }
+            .boton:hover {background: #c5c3c39f;}
+    
+            .salir ul, ol {list-style: none;}
+            .salir li ul{display: none; position: absolute;}
+            .salir li:hover > ul{display: block;}
+            .salir button{background: none; border:none;}
+    
+            .crud {text-align: center;}
+    
+            .crud input {
+                border-radius: 4px;
+                border: 1px solid #000;
+                margin-left: 10px;
+                margin-right: 5%;
+            }
+    
+            .crud button {
+                background: none;
+                border-radius: 4px;
+                border: 2px solid #000;
+                margin-left: 10px;
+                padding: 4px 10px;
+            }
+    
+            .nombre {
+                margin: 10px;
+                font-size: small;
+                font-weight: bolder;
+            }
         </style>
             
     </head>
@@ -84,16 +125,30 @@
                     var intervalo=setInterval(fecha,1000);
                 </script>
             </div>
-            <div class="boton_user"><!--Botones Factura y Usuario-->
-                <a href="/facturas"><button type="submit" >Ir a factura</button></a>
-                <a href="/vendedores"><button type="submit" >Ir a Usuarios</button></a>
-                <div style="border:2px solid #000;border-radius: 10px;padding: 5px 10px 2px;"><!--Foto usuario, Nombre y Código-->
-                    <img src="https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png"
-                        alt="" height="60px" width="60px"></img>
-                    <p>Nombre Usuario<br>Código</p>
-                </div>     
+            <div id="boton_user">
+                <!--Botones Factura y Usuario-->
+                <a href="/vendedores"><button type="submit" class="boton">Ir a Usuarios</button></a>
+                <a href="/facturasV"><button type="submit" class="boton">Ir a Facturas</button></a>
+                <div class="salir">
+                    <ul>
+                        <li>
+                            <div style="display:flex;border:2px solid #000;border-radius: 10px;padding: 5px 10px 2px;">
+                                <!--Foto usuario, Nombre y Código-->
+                                <img src="https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png"
+                                    alt="" height="60px" width="60px"></img>
+                                <div class="nombre">
+                                    <div th:text="${nombre}"></div>
+                                    <div th:text="${rol}"></div>
+                                </div>
+                            </div>
+                            <ul>
+                                <li><a href="/salir"><button>Salir</button></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div> 
+        </div>
         <br>
         <div class="crud"><!--Formulario CRUD para los productos-->
             <form th:action = "@{/productos}" th:object="${producto}" method="post">
@@ -118,7 +173,6 @@
                     <div class="col"><strong>Nombre de producto</strong></div>
                     <div class="col"><strong>Descripción</strong></div>
                     <div class="col"><strong>Precio</strong></div>
-                    <div class="col"><strong>Acción</strong></div>
                 </div>
             </div>
         </div>
@@ -129,10 +183,6 @@
                     <div class="col" th:text="${producto.nombreProducto}"></div>
                     <div class="col" th:text="${producto.descripcionProducto}"></div>
                     <div class="col" th:text="${producto.precioProducto}"></div>
-                    <div class="col">
-                        <a th:href="@{productos/editar/} + ${producto.codProducto}"><button>Editar</button></a><br>
-                        <a th:href="@{productos/eliminar(codProducto= ${producto.codProducto})}"><button>Eliminar</button></a>
-                    </div>
                 </div>
             </div>
         </div>

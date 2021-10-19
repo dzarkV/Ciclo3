@@ -15,7 +15,16 @@
             .reloj{font-size: 12px;display: flex; font-family: Nunito;}
             .titulo_boton{overflow: hidden;}
             .titulo_boton h3{float: left;}
-            .titulo_boton button{float: right;background: none;border-radius: 4px; border: 2px solid #000;margin-right: 40px; padding: 4px 10px;}
+            .titulo_boton > div{float:right;}
+            .titulo_boton button{float: right;background: none;border-radius: 4px; border: 2px solid #000;margin-right: 20px; padding: 4px 10px;}
+            .salir ul, ol {list-style: none;}
+            .salir li ul{display: none; position: absolute;}
+            .salir li:hover > ul{display: block;}
+            .salir button{background: none; border:none;}
+            .nombre {
+                margin: 10px;
+                font-size: small;
+                font-weight: bolder;}
         </style>
     </head>
 
@@ -80,7 +89,27 @@
         </div>
         <div class="titulo_boton">
             <h3>Busqueda de Productos</h3>
-            <a href="/productos"><button>Volver</button></a>
+            <div>
+                <div class="salir">
+                    <ul>
+                        <li>
+                            <div style="display:flex;border:2px solid #000;border-radius: 10px;padding: 5px 10px 2px; margin-right: 10px;">
+                                <!--Foto usuario, Nombre y Código-->
+                                <img src="https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png"
+                                    alt="" height="60px" width="60px"></img>
+                                <div class="nombre">
+                                    <div th:text="${nombre}"></div>
+                                    <div th:text="${rol}"></div>
+                                </div>
+                            </div>
+                            <ul>
+                                <li><a href="/salir"><button>Salir</button></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <a href="/volverP"><button>Volver</button></a>
         </div>
         <br>
         <div class="card">

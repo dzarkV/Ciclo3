@@ -33,6 +33,7 @@ public class ControladorBienvenido {
         String user = loginDto.getCodVendedor();
         String password = loginDto.getPassVendedor();
         Vendedor vendedor = repositorioVendedor.findByCodVendedor(user);
+        if(vendedor==null){return "vistaErrorLog";}
         String rol = vendedor.getRolVendedor();
         String nombre=vendedor.getNombreVendedor();
         Login login=new Login();

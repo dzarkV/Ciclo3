@@ -67,8 +67,8 @@
         
         <form class="box" th:action="@{/}" th:object="${usuario}" method="post">
             <h1>!Bienvenido al Sistema de facturación!</h1>
-            <input type="text" placeholder="Usuario" th:field="*{codVendedor}">
-            <input type="password" placeholder="Contraseña" th:field="*{passVendedor}">
+            <input type="text" placeholder="Usuario" th:field="*{codVendedor}" required>
+            <input type="password" placeholder="Contraseña" th:field="*{passVendedor}" required>
             <button type="submit" >Ingresar</button>
         </form>
     </body>
