@@ -4,7 +4,7 @@
       xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
-        <title>Cear Factura</title>
+        <title>Eliminar Productos</title>
         <meta charset="UTF-8"> </meta>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"/>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
@@ -15,18 +15,31 @@
             .reloj{font-size: 12px;display: flex;}
             .boton_user{display: flex;float: right;}
             .boton_user div{display: flex; margin-right: 40px;}
-            .boton_user button{margin-right:40px;background: none;border: 2px solid #000; border-radius: 10px;padding: 6px 10px;}
-            .boton_user button:hover{background: #c5c3c39f;}
+            .boton_user div button{margin-left:10px;background: none;border: 2px solid #000; border-radius: 10px;padding: 6px 10px;}
+            .boton_user div button:hover{background: #c5c3c39f;}
+            #codigoproducto,#precioproducto{width:10% ; margin-right: 5%; margin-left: 10px;}
+            #nombreproducto,#descripcionproducto{width:20% ; margin-right: 5%; margin-left: 10px;}
             .crud{text-align: center;}
-            .crud label{margin-right: 10px;}
-            #numerofactura,#codigoproducto{margin-right: 3%;}
-            #codigovendedor,#valorfactura{margin-right: 7%;}
             .crud input{border-radius: 4px; border: 1px solid #000;}
             .crud button{background: none;border-radius: 4px; border: 2px solid #000;margin-left: 10px; padding: 4px 10px;}
+            .row button{background: none;border-radius: 4px; border: 2px solid #000;padding: 0px 10px;margin-top: 2px;}
+            .titulo_boton{overflow: hidden;}
+            .titulo_boton h3{float: left;}
+            .titulo_boton > div{float:right;}
+            .titulo_boton button{float: right;background: none;border-radius: 4px; border: 2px solid #000;margin-right: 20px; padding: 4px 10px;}
+            .salir ul, ol {list-style: none;}
+            .salir li ul{display: none; position: absolute;}
+            .salir li:hover > ul{display: block;}
+            .salir button{background: none; border:none;}
+            .nombre {
+                margin: 10px;
+                font-size: small;
+                font-weight: bolder;}
         </style>
+            
     </head>
     <body>
-        <div class="box"><!--Overflow para evitar errores de posicionamiento float-->
+         <div class="box">
             <div class="caja_reloj">
                 <div class="reloj"><!--Reloj-->
                     <p>Fecha: &nbsp;</p>
@@ -83,58 +96,44 @@
                     var intervalo=setInterval(fecha,1000);
                 </script>
             </div>
-            <div class="boton_user"><!--Botones Factura y Usuario-->
-                <a href="/productos" ><button type="submit" >Ir a Productos</button></a>
-                <a href="/vendedores"><button type="submit" >Ir a Usuarios</button></a>
-                <div style="border:2px solid #000;border-radius: 10px;padding: 5px 10px 2px;"><!--Foto usuario, Nombre y Código-->
-                    <img src="https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png"
-                        alt="" height="60px" width="60px"></img>
-                    <p>Nombre Usuario<br>Código</p>
+        </div>
+        <div class="titulo_boton">
+            <h3>Eliminar Productos</h3>
+            <div>
+                <div class="salir">
+                    <ul>
+                        <li>
+                            <div style="display:flex;border:2px solid #000;border-radius: 10px;padding: 5px 10px 2px; margin-right: 10px;">
+                                <!--Foto usuario, Nombre y Código-->
+                                <img src="https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png"
+                                    alt="" height="60px" width="60px"></img>
+                                <div class="nombre">
+                                    <div th:text="${nombre}"></div>
+                                    <div th:text="${rol}"></div>
+                                </div>
+                            </div>
+                            <ul>
+                                <li><a href="/salir"><button>Salir</button></a></li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
-            </div> 
-        </div> 
+            </div>
+            <a href="/volverP"><button>Volver</button></a>
+        </div>
         <br>
-        <div class="crud">
-            <form th:action = "@{/facturas}" th:object="${factura}" method="post">
-                <label> Número de factura </label>
-                <input id = "numerofactura" type="text" th:field ="*{numeroFactura}"required/>
+        <div class="crud"><!--Formulario CRUD para los productos-->
+            <form th:action = "@{/productos/eliminar}" th:object="${producto}" method="delete">
                 <label> Código del Producto </label>
-                <input id = "codigoproducto" type="text" th:field ="*{codigoProducto}"required/>
-                <label> Fecha de venta  </label>
-                <input id = "fecha" type="date" th:field = "*{fechaVenta}" required/> <br/><br/>
-                <label> Código del Vendedor</label>
-                <input id = "codigovendedor" type="text" th:field = "*{codigoVendedor}"required/> 
+                <input id = "codigoproducto" type="text" th:field ="*{codProducto}" th:value="*{codProducto}" readonly="true"/>
+                <label> Nombre del Producto </label>
+                <input id = "nombreproducto" type="text" th:field = "*{nombreProducto}" readonly="true"/> <br/><br/>
+                <label> Descripción Producto</label>
+                <input id = "descripcionproducto" type="text" th:field = "*{descripcionProducto}" readonly="true"/> 
                 <label> Precio del Producto ($)</label>
-                <input id = "valorfactura" type="text" th:field = "*{valorFactura}"required/>             
+                <input id = "precioproducto" type="text" th:field = "*{precioProducto}" readonly="true"/>             
                 <br/> <br/>               
-                <button type = "submit">Agregar Factura</button>
-                <button type="submit">Consultar</button>
+                <a th:href="@{/productos/eliminar(codProducto= ${producto.codProducto})}">
+                    <button>Eliminar Producto</button></a>
             </form>
         </div>
-        <h3>Lista de Facturas</h3>
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col"><strong>No.Fac</strong></div>
-                    <div class="col"><strong>Cod.Prod</strong></div>
-                    <div class="col"><strong>Fecha</strong></div>
-                    <div class="col"><strong>Cod.Vend</strong></div>
-                    <div class="col"><strong>Valor.Facura</strong></div>
-                </div>
-            </div>
-        </div>
-        <div class="card" th:each="factura: ${facturas}">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col" th:text="${factura.numeroFactura}"></div>
-                    <div class="col" th:text="${factura.producto.codProducto}"></div>
-                    <div class="col" th:text="${factura.fechaVenta}"></div>
-                    <div class="col" th:text="${factura.vendedor.codVendedor}"></div>
-                    <div class="col" th:text="${factura.valorFactura}"></div>
-                </div>
-            </div>
-        </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-    </body>
-</html>
