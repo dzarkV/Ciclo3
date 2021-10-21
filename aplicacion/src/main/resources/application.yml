@@ -12,13 +12,10 @@ spring:
     datasource:
         driver-class-name: org.postgresql.Driver
         #driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:postgresql://ec2-54-172-169-87.compute-1.amazonaws.com:5432/degskcfn0gr328
-        #url: jdbc:mysql://localhost:3306/p_ventas
-        username: itkxpwliesyecy
+        #url: jdbc:postgresql://ec2-52-2-118-38.compute-1.amazonaws.com:5432/d2mjihp450p3tl
+        url: jdbc:postgresql://localhost:3727/p_ventas
+        #username: kdwqrntbmtyaai
+        username: postgres
         #mintic_unal
-        password: 2cb9202bb15c531e938c78908062e77fc3acffff9b3d7a3d5b603c84b3659d94
-        #Curso2021
-    flyway:
-        url: jdbc:postgresql://ec2-54-172-169-87.compute-1.amazonaws.com:5432/degskcfn0gr328
-        user: itkxpwliesyecy
-        password: 2cb9202bb15c531e938c78908062e77fc3acffff9b3d7a3d5b603c84b3659d94
+        #password: e3cbf75744d0796b8d8dcfa7ca986f2a682f33e256d6f11f8efa4f7df95506d8
+        password: Curso2021

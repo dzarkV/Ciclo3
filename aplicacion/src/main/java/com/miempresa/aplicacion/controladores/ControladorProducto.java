@@ -157,9 +157,45 @@ public class ControladorProducto {
      * Método para eliminar producto
      */
     @GetMapping("/productos/eliminar")
-    public RedirectView eliminarProducto(Producto producto) {
-        repositorioProducto.delete(producto);
-        return new RedirectView("/productosA");
-    }
+    public String eliminarProducto(Producto producto, Model modelo) {
+        try {
+            repositorioProducto.delete(producto);
+            return "redirect:/productosA";
+        } catch (Exception e) {
+            String messageRequest = e.getMessage();
+            if (messageRequest.contains("could not execute statement; SQL")) {
+                String respuesta = "Este producto no se puede borrar porque esta asociado a una factura";
+                modelo.addAttribute("respuesta", respuesta);
+                Iterable<Login> login = repositorioLogin.findAll();
+                ArrayList<String> cod = new ArrayList();
+                ArrayList<String> nom = new ArrayList();
+                for (Login i : login) {
+                    cod.add(i.getRolUser());
+                    nom.add(i.getNombreUser());
+                }
+                Object[] codigo = cod.toArray();
+                Object[] nombre = nom.toArray();
+                modelo.addAttribute("nombre", nombre[nombre.length - 1]);
+                modelo.addAttribute("rol", codigo[codigo.length - 1]);
+                return "vistaConfirmarEliminarProducto";
+            } else {
+                String respuesta = "Elemento no borrado";
+                modelo.addAttribute("respuesta", respuesta);
+                Iterable<Login> login = repositorioLogin.findAll();
+                ArrayList<String> cod = new ArrayList();
+                ArrayList<String> nom = new ArrayList();
+                for (Login i : login) {
+                    cod.add(i.getRolUser());
+                    nom.add(i.getNombreUser());
+                }
+                Object[] codigo = cod.toArray();
+                Object[] nombre = nom.toArray();
+                modelo.addAttribute("nombre", nombre[nombre.length - 1]);
+                modelo.addAttribute("rol", codigo[codigo.length - 1]);
+                return "vistaConfirmarEliminarProducto";
+            }
 
+        }
+
+    }
 }

@@ -10,17 +10,28 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
     <style>
-        body {font-family: 'Nunito';}
+        body input {
+            border-radius: 2px;
+        }
 
         .box {
             overflow: hidden;
-            margin-top: 5px;
+            margin-top: 50px;
+            margin-bottom: 30px;
         }
 
-        .caja_reloj {float: left;}
+        .caja_reloj {
+            margin-left: 30px;
+            border-radius: 4px;
+            height: 34px;
+            padding: 8px;
+            background: #FFF;
+            float: left;
+        }
 
         .reloj {
             font-size: 12px;
+            font-weight: 650;
             display: flex;
         }
 
@@ -31,33 +42,10 @@
 
         .boton {
             margin-right: 20px;
-            background: none;
-            border: 2px solid #000;
-            border-radius: 10px;
-            padding: 6px 10px;
-        }
-        .boton:hover {background: #c5c3c39f;}
-
-        .salir ul, ol {list-style: none;}
-        .salir li ul{display: none; position: absolute;}
-        .salir li:hover > ul{display: block;}
-        .salir button{background: none; border:none;}
-
-        .crud {text-align: center;}
-
-        .crud input {
-            border-radius: 4px;
-            border: 1px solid #000;
-            margin-left: 10px;
-            margin-right: 5%;
         }
 
-        .crud button {
-            background: none;
-            border-radius: 4px;
-            border: 2px solid #000;
-            margin-left: 10px;
-            padding: 4px 10px;
+        .boton:hover {
+            background: #1077ece0;
         }
 
         .nombre {
@@ -65,11 +53,15 @@
             font-size: small;
             font-weight: bolder;
         }
+
+        .nombre button {
+            float: right;
+        }
     </style>
 </head>
 
-<body>
-    <div class="box">
+<body class="bg-dark">
+    <div class="box ">
         <!--Overflow para evitar errores de posicionamiento float-->
         <div class="caja_reloj">
             <div class="reloj">
@@ -130,73 +122,98 @@
         </div>
         <div id="boton_user">
             <!--Botones Factura y Usuario-->
-            <a href="/vendedores"><button type="submit" class="boton">Ir a Usuarios</button></a>
-            <a href="/productosA"><button type="submit" class="boton">Ir a Productos</button></a>
+            <a href="/vendedores"><button type="submit" class="btn btn-info boton">Ir a Usuarios</button></a>
+            <a href="/productosA"><button type="submit" class="btn btn-info boton">Ir a Productos</button></a>
+
             <div class="salir">
-                <ul>
-                    <li>
-                        <div style="display:flex;border:2px solid #000;border-radius: 10px;padding: 5px 10px 2px;">
-                            <!--Foto usuario, Nombre y Código-->
-                            <img src="https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png"
-                                alt="" height="60px" width="60px"></img>
-                            <div class="nombre">
-                                <div th:text="${nombre}"></div>
-                                <div th:text="${rol}"></div>
-                            </div>
-                        </div>
-                        <ul>
-                            <li><a href="/salir"><button>Salir</button></a></li>
-                        </ul>
-                    </li>
-                </ul>
+                <div
+                    style="display:flex;border-radius: 10px;padding: 5px 10px 2px; margin-right: 20px; background: #FFF;margin-bottom: 2px;">
+                    <!--Foto usuario, Nombre y Código-->
+                    <img src="https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png"
+                        alt="" height="60px" width="60px"></img>
+                    <div class="nombre">
+                        <div th:text="${nombre}"></div>
+                        <div th:text="${rol}"></div>
+                        <a href="/salir"><button class="btn btn-danger ml-auto">Salir</button></a></li>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-        <h1>Busqueda de Facturas/informes</h1>
+    <div class="w-75 m-auto border-border rounded border-white bg-white p-2 ">
+        <h1 class="text-center mb-4">Busqueda de Facturas/Informes</h1>
+        <br>
         <form th:action="@{/consultar/factura}" th:object="${factura}" method="post">
-            <label> Número de factura </label>
-            <input id="numerofactura" type="text" th:field="*{numeroFactura}" />
-            <label> Código del Vendedor</label>
-            <input id="codigovendedor" type="text" th:field="*{codigoVendedor}" />
-            <br /> <br />
-            <button type="submit">Consultar</button>
+            <div class="border-border text-center border-dark">
+                <label> Número de factura </label>
+                <input id="numerofactura" type="text" th:field="*{numeroFactura}"
+                    style="width: 100px; margin-right: 20px;" placeholder="  N° Factura" required />
+                <label> Código del Vendedor</label>
+                <input id="codigovendedor" type="text" th:field="*{codigoVendedor}" placeholder="   Código" />
+                <br /> <br />
+                <button type="submit" class="btn btn-success text-white">Consultar</button>
+            </div>
+            <br>
+            <hr>
+            <br>
         </form>
-        <h1>Eliminacion de Facturas</h1>
+        <h1 class="text-center mb-4">Eliminacion de Facturas</h1>
         <form th:action="@{/facturas/Borrar}" th:object="${factura}" method="post">
-            <label> Número de factura </label>
-            <input id="numerofactura" type="text" th:field="*{numeroFactura}" />
-            <br /> <br />
-            <button type="submit">Eliminar</button>
+            <div class="border-border text-center border-dark">
+                <label> Número de factura </label>
+                <input id="numerofactura" type="text" th:field="*{numeroFactura}" />
+                <br /> <br />
+                <button type="submit" class="btn btn-success text-white">Eliminar</button>
+            </div>
         </form>
-        <h1>Forma para creación de Factura</h1>
+        <br>
+        <hr>
+        <br>
+        <h1 class="text-center mb-4">Forma para creación de Factura</h1>
         <form th:action="@{/crear/factura}" th:object="${factura}" method="post">
-            <label> Número de factura </label>
-            <input id="numerofactura" type="text" th:field="*{numeroFactura}" required />
-            <label> Código del Producto </label>
-            <input id="codigoproducto" type="text" th:field="*{codigoProducto}" required />
-            <label> Fecha de venta </label>
-            <input id="fecha" type="date" th:field="*{fechaVenta}" required /> <br /><br />
-            <label> Código del Vendedor</label>
-            <input id="codigovendedor" type="text" th:field="*{codigoVendedor}" required />
-            <label> Precio del Producto ($)</label>
-            <input id="valorfactura" type="text" th:field="*{valorFactura}" required />
-            <br /> <br />
-            <button type="submit">Agregar Factura</button>
+            <div class="border-border text-center border-dark ">
+                <div class="row justify-content-between m-auto" style="width: 80%;margin-top: 30px;">
+                    <label> Número de factura </label>
+                    <input id="numerofactura" type="text" th:field="*{numeroFactura}" required class="mw-25"/>
+                    <label> Código del Producto </label>
+                    <input id="codigoproducto" type="text" th:field="*{codigoProducto}" required />
+                </div>
+                <br>
+                <div class="row justify-content-between m-auto" style="width: 80%;">
+                    <label> Fecha de venta </label>
+                    <input id="fecha" type="date" th:field="*{fechaVenta}" required />
+                    <label> Código del Vendedor</label>
+                    <input id="codigovendedor" type="text" th:field="*{codigoVendedor}" required />
+                </div>
+                <br>
+                <label> Precio del Producto ($)</label>
+                <input id="valorfactura" type="text" th:field="*{valorFactura}" required />
+                <br /> <br />
+                <button type="submit" class="btn btn-success text-white">Agregar Factura</button>
+            </div>
         </form>
-        <h1>Formulario edicion de facturas</h1>
+        <br>
+        <hr>
+        <br>
+        <h1 class="text-center mb-4">Formulario edición de facturas</h1>
         <form th:action="@{/facturas/Modificar}" th:object="${factura}" method="post">
-            <label> Número de factura </label>
-            <input id="numerofactura" type="text" th:field="*{numeroFactura}" />
+            <div class="border-border text-center border-dark">
+                <label> Número de factura </label>
+                <input id="numerofactura" type="text" th:field="*{numeroFactura}" />
 
-            <label> Código del Producto </label>
-            <input id="codigoproducto" type="text" th:field="*{codigoProducto}" />
-
-            <label> Precio del Producto ($)</label>
-            <input id="valorfactura" type="text" th:field="*{valorFactura}" />
-            <br /> <br />
-            <button type="submit">Editar Factura</button>
+                <label> Código del Producto </label>
+                <input id="codigoproducto" type="text" th:field="*{codigoProducto}" />
+                <br /><br />
+                <label> Precio del Producto ($)</label>
+                <input id="valorfactura" type="text" th:field="*{valorFactura}" />
+                <br /> <br />
+                <button type="submit" class="btn btn-success text-white">Editar Factura</button>
+            </div>
         </form>
-        <h3>Lista de Facturas</h3>
+        <br>
+        <hr>
+        <br>
+        <h3 class="text-center mb-4">Lista de Facturas</h3>
         <div class="card">
             <div class="card-body">
                 <div class="row">
@@ -219,9 +236,9 @@
                 </div>
             </div>
         </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

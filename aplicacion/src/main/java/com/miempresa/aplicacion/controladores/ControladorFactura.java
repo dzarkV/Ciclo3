@@ -64,24 +64,6 @@ public class ControladorFactura {
         return "vistaFormularioAdminFacturas";
     }
 
-    @GetMapping("/facturas") //path del controlador
-    public String getTodasLasFacturas(Model model) {
-        Iterable<Factura> facturas = repositorioFactura.findAll();
-        Iterable<Login> login = repositorioLogin.findAll();
-        ArrayList<String> cod = new ArrayList();
-        ArrayList<String> nom = new ArrayList();
-        for (Login i : login) {
-            cod.add(i.getRolUser());
-            nom.add(i.getNombreUser());
-        }
-        Object[] codigo = cod.toArray();
-        Object[] nombre = nom.toArray();
-        model.addAttribute("nombre", nombre[nombre.length - 1]);
-        model.addAttribute("rol", codigo[codigo.length - 1]);
-        model.addAttribute("facturas", facturas);
-        return "vistaFactura";
-    }
-
     @GetMapping("/facturas/{numeroFactura}") //path del controlador
     public String getFacturaByNumero(@PathVariable String numeroFactura, Model model) {
         Iterable<Login> login = repositorioLogin.findAll();
@@ -276,6 +258,7 @@ public class ControladorFactura {
 //Controlador vistas Vendedor
     @GetMapping("/facturasV") //path del controlador
     public String getTodasLasFacturasV(Model model) {
+        Iterable<Factura> facturas = repositorioFactura.findAll();
         Iterable<Login> login = repositorioLogin.findAll();
         ArrayList<String> cod = new ArrayList();
         ArrayList<String> nom = new ArrayList();
@@ -288,6 +271,7 @@ public class ControladorFactura {
         model.addAttribute("nombre", nombre[nombre.length - 1]);
         model.addAttribute("rol", codigo[codigo.length - 1]);
         model.addAttribute("factura", new FacturaDto());
+        model.addAttribute("facturas", facturas);
         return "vistaFacturaV";
     }
 

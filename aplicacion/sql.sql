@@ -1,3 +1,15 @@
+CREATE TABLE IF NOT EXISTS public.t_login
+(
+    cod_vendedor character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    nombre_vendedor character varying(30) COLLATE pg_catalog."default" NOT NULL,
+    rol_vendedor character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    pass_vendedor character varying(10) COLLATE pg_catalog."default" NOT NULL
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.t_login
+    OWNER to postgres;
 DROP TABLE  IF EXISTS t_productos;
 CREATE TABLE t_productos (
 	cod_producto VARCHAR(8) PRIMARY KEY,
