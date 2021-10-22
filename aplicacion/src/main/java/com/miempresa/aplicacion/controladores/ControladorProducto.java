@@ -24,14 +24,8 @@ public class ControladorProducto {
     private final RepositorioProducto repositorioProducto;
     private final RepositorioLogin repositorioLogin;
 
-    /**
-     * Metodo para encontrar producto por Id
-     */
-    @GetMapping("/productos/{codigoProducto}") //path del controlador
-    public String getProductoById(@PathVariable String codigoProducto, Model model) {
-        List<String> listaProducto = new ArrayList<>();
-        listaProducto.add(codigoProducto);
-        Iterable<Producto> productos = repositorioProducto.findAllById(listaProducto);
+       //Método para mostrar el vendedor y su rol en el recuadro
+    public void mostrarVendedor(Model model){
         Iterable<Login> login = repositorioLogin.findAll();
         ArrayList<String> cod = new ArrayList();
         ArrayList<String> nom = new ArrayList();
@@ -43,6 +37,16 @@ public class ControladorProducto {
         Object[] nombre = nom.toArray();
         model.addAttribute("nombre", nombre[nombre.length - 1]);
         model.addAttribute("rol", codigo[codigo.length - 1]);
+    }
+    /**
+     * Metodo para encontrar producto por Id
+     */
+    @GetMapping("/productos/{codigoProducto}") //path del controlador
+    public String getProductoById(@PathVariable String codigoProducto, Model model) {
+        List<String> listaProducto = new ArrayList<>();
+        listaProducto.add(codigoProducto);
+        Iterable<Producto> productos = repositorioProducto.findAllById(listaProducto);
+        mostrarVendedor(model);//Método de mostrar rol y usuario aplicado
         model.addAttribute("productos", productos);
         return "vistaProducto";
     }
@@ -68,17 +72,7 @@ public class ControladorProducto {
     @GetMapping("/productosA") //path del controlador
     public String crearProductoAdmin(Model model) {
         Iterable<Producto> productos = repositorioProducto.findAll();
-        Iterable<Login> login = repositorioLogin.findAll();
-        ArrayList<String> cod = new ArrayList();
-        ArrayList<String> nom = new ArrayList();
-        for (Login i : login) {
-            cod.add(i.getRolUser());
-            nom.add(i.getNombreUser());
-        }
-        Object[] codigo = cod.toArray();
-        Object[] nombre = nom.toArray();
-        model.addAttribute("nombre", nombre[nombre.length - 1]);
-        model.addAttribute("rol", codigo[codigo.length - 1]);
+        mostrarVendedor(model);
         model.addAttribute("productos", productos);
         model.addAttribute("producto", new Producto());
         return "vistaCrearProductoAdmin";
@@ -91,17 +85,7 @@ public class ControladorProducto {
     @GetMapping("/productos") //path del controlador
     public String crearProducto(Model model) {
         Iterable<Producto> productos = repositorioProducto.findAll();
-        Iterable<Login> login = repositorioLogin.findAll();
-        ArrayList<String> cod = new ArrayList();
-        ArrayList<String> nom = new ArrayList();
-        for (Login i : login) {
-            cod.add(i.getRolUser());
-            nom.add(i.getNombreUser());
-        }
-        Object[] codigo = cod.toArray();
-        Object[] nombre = nom.toArray();
-        model.addAttribute("nombre", nombre[nombre.length - 1]);
-        model.addAttribute("rol", codigo[codigo.length - 1]);
+        mostrarVendedor(model);
         model.addAttribute("productos", productos);
         model.addAttribute("producto", new Producto());
         return "vistaCrearProducto";
@@ -127,6 +111,7 @@ public class ControladorProducto {
     @GetMapping("/productos/editar/{codProducto}")
     public String actualizarProducto(Producto producto, Model modelo) {
         Producto productoElegido = repositorioProducto.findByCodProducto(producto.getCodProducto());
+        mostrarVendedor(modelo);
         modelo.addAttribute("producto", productoElegido);
         return "vistaEditarProducto";
     }
@@ -138,17 +123,7 @@ public class ControladorProducto {
     @GetMapping("/productos/confirmar/eliminar")
     public String confirmarEliminarProducto(Producto producto, Model modelo) {
         Producto productoElegido = repositorioProducto.findByCodProducto(producto.getCodProducto());
-        Iterable<Login> login = repositorioLogin.findAll();
-        ArrayList<String> cod = new ArrayList();
-        ArrayList<String> nom = new ArrayList();
-        for (Login i : login) {
-            cod.add(i.getRolUser());
-            nom.add(i.getNombreUser());
-        }
-        Object[] codigo = cod.toArray();
-        Object[] nombre = nom.toArray();
-        modelo.addAttribute("nombre", nombre[nombre.length - 1]);
-        modelo.addAttribute("rol", codigo[codigo.length - 1]);
+        mostrarVendedor(modelo);
         modelo.addAttribute("producto", productoElegido);
         return "vistaConfirmarEliminarProducto";
     }
@@ -166,32 +141,12 @@ public class ControladorProducto {
             if (messageRequest.contains("could not execute statement; SQL")) {
                 String respuesta = "Este producto no se puede borrar porque esta asociado a una factura";
                 modelo.addAttribute("respuesta", respuesta);
-                Iterable<Login> login = repositorioLogin.findAll();
-                ArrayList<String> cod = new ArrayList();
-                ArrayList<String> nom = new ArrayList();
-                for (Login i : login) {
-                    cod.add(i.getRolUser());
-                    nom.add(i.getNombreUser());
-                }
-                Object[] codigo = cod.toArray();
-                Object[] nombre = nom.toArray();
-                modelo.addAttribute("nombre", nombre[nombre.length - 1]);
-                modelo.addAttribute("rol", codigo[codigo.length - 1]);
+                mostrarVendedor(modelo);
                 return "vistaConfirmarEliminarProducto";
             } else {
                 String respuesta = "Elemento no borrado";
                 modelo.addAttribute("respuesta", respuesta);
-                Iterable<Login> login = repositorioLogin.findAll();
-                ArrayList<String> cod = new ArrayList();
-                ArrayList<String> nom = new ArrayList();
-                for (Login i : login) {
-                    cod.add(i.getRolUser());
-                    nom.add(i.getNombreUser());
-                }
-                Object[] codigo = cod.toArray();
-                Object[] nombre = nom.toArray();
-                modelo.addAttribute("nombre", nombre[nombre.length - 1]);
-                modelo.addAttribute("rol", codigo[codigo.length - 1]);
+                mostrarVendedor(modelo);
                 return "vistaConfirmarEliminarProducto";
             }
 

@@ -30,6 +30,20 @@ public class ControladorFactura {
     private final RepositorioProducto repositorioProducto;
     private final RepositorioVendedor repositorioVendedor;
     private final RepositorioLogin repositorioLogin;
+    
+    public void mostrarVendedor(Model model){
+        Iterable<Login> login = repositorioLogin.findAll();
+        ArrayList<String> cod = new ArrayList();
+        ArrayList<String> nom = new ArrayList();
+        for (Login i : login) {
+            cod.add(i.getRolUser());
+            nom.add(i.getNombreUser());
+        }
+        Object[] codigo = cod.toArray();
+        Object[] nombre = nom.toArray();
+        model.addAttribute("nombre", nombre[nombre.length - 1]);
+        model.addAttribute("rol", codigo[codigo.length - 1]);
+    }
 
     @GetMapping("/volverF")
     public RedirectView volver(Model model) {
@@ -48,17 +62,7 @@ public class ControladorFactura {
     @GetMapping("/facturasA") //path del controlador
     public String getTodasLasFacturasA(Model model) {
         Iterable<Factura> facturas = repositorioFactura.findAll();
-        Iterable<Login> login = repositorioLogin.findAll();
-        ArrayList<String> cod = new ArrayList();
-        ArrayList<String> nom = new ArrayList();
-        for (Login i : login) {
-            cod.add(i.getRolUser());
-            nom.add(i.getNombreUser());
-        }
-        Object[] codigo = cod.toArray();
-        Object[] nombre = nom.toArray();
-        model.addAttribute("nombre", nombre[nombre.length - 1]);
-        model.addAttribute("rol", codigo[codigo.length - 1]);
+        mostrarVendedor(model);
         model.addAttribute("facturas", facturas);
         model.addAttribute("factura", new FacturaDto());
         return "vistaFormularioAdminFacturas";
@@ -66,17 +70,7 @@ public class ControladorFactura {
 
     @GetMapping("/facturas/{numeroFactura}") //path del controlador
     public String getFacturaByNumero(@PathVariable String numeroFactura, Model model) {
-        Iterable<Login> login = repositorioLogin.findAll();
-        ArrayList<String> cod = new ArrayList();
-        ArrayList<String> nom = new ArrayList();
-        for (Login i : login) {
-            cod.add(i.getRolUser());
-            nom.add(i.getNombreUser());
-        }
-        Object[] codigo = cod.toArray();
-        Object[] nombre = nom.toArray();
-        model.addAttribute("nombre", nombre[nombre.length - 1]);
-        model.addAttribute("rol", codigo[codigo.length - 1]);
+        mostrarVendedor(model);
         Factura factura = repositorioFactura.findByNumeroFactura(numeroFactura);
         model.addAttribute("facturas", factura);
         return "vistaFactura";
@@ -84,7 +78,6 @@ public class ControladorFactura {
 
     @GetMapping("/crear/factura") //path del controlador
     public RedirectView crearFactura(Model model) {
-
         model.addAttribute("factura", new FacturaDto());
         return new RedirectView("/facturasA");
     }
@@ -97,14 +90,11 @@ public class ControladorFactura {
 
     @PostMapping("/consultar/factura") //path del controlador
     public String procesarFactura(@ModelAttribute FacturaDto facturaDto, Model model) {
-
         boolean flag = false;
         if (facturaDto.getCodigoVendedor() != null && facturaDto.getCodigoVendedor() != "") {
-
             Vendedor vendedor = repositorioVendedor.findByCodVendedor(facturaDto.getCodigoVendedor());
 
             if (vendedor != null) {
-
                 Iterable<Factura> facturas = repositorioFactura.findAll();
                 List<Factura> facturas2 = new ArrayList<>();
 
@@ -118,17 +108,7 @@ public class ControladorFactura {
                 if (flag == false) {
                     return "redirect:/consultar/factura";
                 }
-                Iterable<Login> login = repositorioLogin.findAll();
-                ArrayList<String> cod = new ArrayList();
-                ArrayList<String> nom = new ArrayList();
-                for (Login i : login) {
-                    cod.add(i.getRolUser());
-                    nom.add(i.getNombreUser());
-                }
-                Object[] codigo = cod.toArray();
-                Object[] nombre = nom.toArray();
-                model.addAttribute("nombre", nombre[nombre.length - 1]);
-                model.addAttribute("rol", codigo[codigo.length - 1]);
+                mostrarVendedor(model);
                 model.addAttribute("facturas", facturas2);
                 return "vistaFactura";
             } else {
@@ -145,7 +125,6 @@ public class ControladorFactura {
                 return "redirect:/consultar/factura";
             }
         }
-
     }
 
     @PostMapping("/crear/factura")
@@ -182,7 +161,6 @@ public class ControladorFactura {
         } else {
             return new RedirectView("/crear/factura/", true);
         }
-
     }
 
     @GetMapping("/facturas/Borrar") //path del controlador
@@ -193,7 +171,6 @@ public class ControladorFactura {
 
     @PostMapping("/facturas/Borrar") //path del controlador
     public String borrarFacturaV(@ModelAttribute FacturaDto factura, Model model) {
-
         Factura factura2 = repositorioFactura.findByNumeroFactura(factura.getNumeroFactura());
 
         if (factura2 == null) {
@@ -202,7 +179,6 @@ public class ControladorFactura {
             repositorioFactura.delete(factura2);
             return "redirect:/facturas";
         }
-
     }
 
     @GetMapping("/facturas/Borrar/{numeroFactura}") //path del controlador
@@ -225,7 +201,6 @@ public class ControladorFactura {
 
     @PostMapping("/facturas/Modificar") //path del controlador
     public String actualizarFactura(@ModelAttribute FacturaDto facturaDto, Model model) {
-
         Factura factura = repositorioFactura.findByNumeroFactura(facturaDto.getNumeroFactura());
 
         if (factura == null) {
@@ -247,29 +222,16 @@ public class ControladorFactura {
             } else {
                 System.out.println("Producto no Existe");
             }
-
             return "redirect:/facturas/" + factura.getNumeroFactura();
         }
-
         return "redirect:/facturas/";
-
     }
 
 //Controlador vistas Vendedor
     @GetMapping("/facturasV") //path del controlador
     public String getTodasLasFacturasV(Model model) {
         Iterable<Factura> facturas = repositorioFactura.findAll();
-        Iterable<Login> login = repositorioLogin.findAll();
-        ArrayList<String> cod = new ArrayList();
-        ArrayList<String> nom = new ArrayList();
-        for (Login i : login) {
-            cod.add(i.getRolUser());
-            nom.add(i.getNombreUser());
-        }
-        Object[] codigo = cod.toArray();
-        Object[] nombre = nom.toArray();
-        model.addAttribute("nombre", nombre[nombre.length - 1]);
-        model.addAttribute("rol", codigo[codigo.length - 1]);
+        mostrarVendedor(model);
         model.addAttribute("factura", new FacturaDto());
         model.addAttribute("facturas", facturas);
         return "vistaFacturaV";

@@ -10,18 +10,30 @@
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
     <style>
-        body {font-family: 'Nunito';}
+        body input {
+            border-radius: 2px;
+        }
 
         .box {
             overflow: hidden;
-            margin-top: 5px;
+            margin-top: 50px;
+            margin-bottom: 30px;
         }
 
-        .caja_reloj {float: left;}
+        .caja_reloj {
+            margin-left: 30px;
+            border-radius: 4px;
+            height: 34px;
+            padding: 8px;
+            background: #FFF;
+            float: left;
+        }
 
         .reloj {
             font-size: 12px;
+            font-weight: 650;
             display: flex;
         }
 
@@ -32,33 +44,24 @@
 
         .boton {
             margin-right: 20px;
-            background: none;
-            border: 2px solid #000;
-            border-radius: 10px;
-            padding: 6px 10px;
-        }
-        .boton:hover {background: #c5c3c39f;}
-
-        .salir ul, ol {list-style: none;}
-        .salir li ul{display: none; position: absolute;}
-        .salir li:hover > ul{display: block;}
-        .salir button{background: none; border:none;}
-
-        .crud {text-align: center;}
-
-        .crud input {
-            border-radius: 4px;
-            border: 1px solid #000;
-            margin-left: 10px;
-            margin-right: 5%;
         }
 
-        .crud button {
-            background: none;
-            border-radius: 4px;
-            border: 2px solid #000;
-            margin-left: 10px;
-            padding: 4px 10px;
+        .boton:hover {
+            background: #1077ece0;
+        }
+
+        .salir ul,
+        ol {
+            list-style: none;
+        }
+
+        .salir li ul {
+            display: none;
+            position: absolute;
+        }
+
+        .salir li:hover>ul {
+            display: block;
         }
 
         .nombre {
@@ -66,10 +69,14 @@
             font-size: small;
             font-weight: bolder;
         }
+
+        .nombre button {
+            float: right;
+        }
     </style>
 </head>
 
-<body>
+<body class="bg-dark">
     <div class="box">
         <!--Overflow para evitar errores de posicionamiento float-->
         <div class="caja_reloj">
@@ -131,63 +138,65 @@
         </div>
         <div id="boton_user">
             <!--Botones Factura y Usuario-->
-            <a href="/facturas"><button type="submit" class="boton">Ir a factura</button></a>
-            <a href="/productos"><button type="submit" class="boton">Ir a Productos</button></a>
+            <a href="/productosV"><button type="submit" class="btn btn-info boton">Ir a Productos</button></a>
+            <a href="/facturasV"><button type="submit" class="btn btn-info boton">Ir a Facturas</button></a>
             <div class="salir">
-                <ul>
-                    <li>
-                        <div style="display:flex;border:2px solid #000;border-radius: 10px;padding: 5px 10px 2px;">
-                            <!--Foto usuario, Nombre y Código-->
-                            <img src="https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png"
-                                alt="" height="60px" width="60px"></img>
-                            <div class="nombre">
-                                <div th:text="${nombre}"></div>
-                                <div th:text="${rol}"></div>
-                            </div>
-                        </div>
-                        <ul>
-                            <li><a href="/salir"><button>Salir</button></a></li>
-                        </ul>
-                    </li>
-                </ul>
+                <div
+                    style="display:flex;border-radius: 10px;padding: 5px 10px 2px; margin-right: 20px; background: #FFF;margin-bottom: 2px;">
+                    <!--Foto usuario, Nombre y Código-->
+                    <img src="https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png"
+                        alt="" height="60px" width="60px"></img>
+                    <div class="nombre">
+                        <div th:text="${nombre}"></div>
+                        <div th:text="${rol}"></div>
+                        <a href="/salir"><button class="btn btn-danger ml-auto">Salir</button></a></li>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <br>
-    <!--Espacios para crear vendedores-->
-    <div class="crud">
+    <div class="w-75 m-auto border-border rounded border-white bg-white p-2 ">
+        <h3 class="text-center mb-4">Formato para Agregar Vendedores</h3>
         <form th:action="@{/vendedores}" th:object="${vendedor}" method="post">
-            <label> Código del Vendedor</label>
-            <input id="codigovendedor" type="text" th:field="*{codVendedor}" required />
-            <label> Nombre del Vendedor</label>
-            <input id="nombrevendedor" type="text" th:field="*{nombreVendedor}" required /><br><br>
-            <label> Rol </label>
-            <input id="nombrevendedor" type="text" th:field="*{rolVendedor}" required />
-            <label> Contraseña</label>
-            <input id="nombrevendedor" type="text" th:field="*{passVendedor}" required />
-            <button type="submit">Agregar Vendedor</button>
+            <div class="border-border text-center border-dark ">
+                <br>
+                <div class="row justify-content-between m-auto" style="width: 80%;">
+                    <label> Código del Vendedor</label>
+                    <input id="codigovendedor" type="text" th:field="*{codVendedor}" required />
+                    <label> Nombre del Vendedor</label>
+                    <input id="nombrevendedor" type="text" th:field="*{nombreVendedor}" required />
+                </div><br>
+                <div class="row justify-content-between m-auto" style="width: 80%;">
+                    <label> Rol </label>
+                    <input id="nombrevendedor" type="text" th:field="*{rolVendedor}" required />
+                    <label> Contraseña</label>
+                    <input id="nombrevendedor" type="password" th:field="*{passVendedor}" required />
+                </div>
+                <br><br>
+                <button type="submit" class="mb-3 btn btn-success text-white">Agregar Vendedor</button>
+            </div>
         </form>
-    </div>
-    <br>
-    <br>
-    <h3>Listado de Vendedores</h3>
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col"><strong>Código</strong></div>
-                <div class="col"><strong>Nombre Vendedor</strong></div>
-                <div class="col"><strong>Rol</strong></div>
-                <div class="col"><strong>Contraseña</strong></div>
+        <br>
+        <hr>
+        <br>
+        <h3>Listado de Vendedores</h3>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col"><strong>Código</strong></div>
+                    <div class="col"><strong>Nombre Vendedor</strong></div>
+                    <div class="col"><strong>Rol</strong></div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="card" th:each="vendedor: ${vendedores}">
-        <div class="card-body">
-            <div class="row">
-                <div class="col" th:text="${vendedor.codVendedor}"></div>
-                <div class="col" th:text="${vendedor.nombreVendedor}"></div>
-                <div class="col" th:text="${vendedor.rolVendedor}"></div>
-                <div class="col" th:text="${vendedor.passVendedor}"></div>
+        <div class="card" th:each="vendedor: ${vendedores}">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col" th:text="${vendedor.codVendedor}"></div>
+                    <div class="col" th:text="${vendedor.nombreVendedor}"></div>
+                    <div class="col" th:text="${vendedor.rolVendedor}"></div>
+                </div>
             </div>
         </div>
     </div>
