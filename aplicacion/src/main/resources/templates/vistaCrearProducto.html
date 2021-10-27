@@ -1,25 +1,210 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Listado Vendedores</title>
-        <meta charset="UTF-8"> </meta>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-    </head>
-    <body>
-        <h1>Forma para creación de Productos</h1>
-        <form th:action = "@{/crear/producto}" th:object="${producto}" method="post">
-            <label> Código del Producto </label>
-            <input id = "codigoproducto" type="text" th:field ="*{codProducto}"/>
-            <label> Nombre del Producto </label>
-            <input id = "nombreproducto" type="text" th:field = "*{nombreProducto}"/> <br/><br/>
-            <label> Descripción Producto</label>
-            <input id = "descripcionproducto" type="text" th:field = "*{descripcionProducto}"/> 
-            <label> Precio del Producto ($)</label>
-            <input id = "precioproducto" type="text" th:field = "*{precioProducto}"/>             
-            <br/> <br/>               
-            <button type = "submit">Agregar Producto</button>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <title>Productos</title>
+    <meta charset="UTF-8">
+    </meta>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body input {
+            border-radius: 2px;
+        }
+
+        .box {
+            overflow: hidden;
+            margin-top: 50px;
+            margin-bottom: 30px;
+        }
+
+        .caja_reloj {
+            margin-left: 30px;
+            border-radius: 4px;
+            height: 34px;
+            padding: 8px;
+            background: #FFF;
+            float: left;
+        }
+
+        .reloj {
+            font-size: 12px;
+            font-weight: 650;
+            display: flex;
+        }
+
+        #boton_user {
+            display: flex;
+            float: right;
+        }
+
+        .boton {
+            margin-right: 20px;
+        }
+
+        .boton:hover {
+            background: #1077ece0;
+        }
+
+        .salir ul,
+        ol {
+            list-style: none;
+        }
+
+        .salir li ul {
+            display: none;
+            position: absolute;
+        }
+
+        .salir li:hover>ul {
+            display: block;
+        }
+
+        .nombre {
+            margin: 10px;
+            font-size: small;
+            font-weight: bolder;
+        }
+
+        .nombre button {
+            float: right;
+        }
+    </style>
+</head>
+
+<body class="bg-dark">
+    <div class="box">
+        <!--Overflow para evitar errores de posicionamiento float-->
+        <div class="caja_reloj">
+            <div class="reloj">
+                <!--Reloj-->
+                <p>Fecha: &nbsp;</p>
+                <p id="dia"></p>
+                <p>/</p>
+                <p id="mes"></p>
+                <p>/</p>
+                <p id="year"></p>
+                <p> &nbsp;</p>
+                <p id="horas"></p>
+                <p>:</p>
+                <p id="minutos"></p>
+                <p>:</p>
+                <p id="segundos"></p>
+                <p> &nbsp;</p>
+                <p id="ampm"> </p>
+            </div>
+            <script type="text/javascript">
+                var fecha = function () {
+                    var d = new Date(),
+                        dia = +d.getDate(),
+                        mes = d.getMonth() + 1,
+                        year = d.getFullYear(),
+                        horas = d.getHours(),
+                        minutos = d.getMinutes(),
+                        segundos = d.getSeconds(),
+                        ampm;
+
+                    var pDia = document.getElementById("dia"),
+                        pMes = document.getElementById("mes"),
+                        pYear = document.getElementById("year"),
+                        pHoras = document.getElementById("horas"),
+                        pMinutos = document.getElementById("minutos"),
+                        pSegundos = document.getElementById("segundos"),
+                        pAmpm = document.getElementById("ampm");
+
+                    if (d.getDate() < 10) { dia = '0' + d.getDate(); }
+                    if (d.getMonth() < 9) { mes = '0' + (d.getMonth() + 1); }
+                    if (d.getHours() < 10) { horas = '0' + d.getHours(); ampm = ' AM'; }
+                    if (d.getHours() == 12) { ampm = ' PM' }
+                    if (d.getHours() > 12) { horas = '0' + d.getHours() - 12; ampm = ' PM' }
+                    if (d.getMinutes() < 10) { minutos = '0' + d.getMinutes(); }
+                    if (d.getSeconds() < 10) { segundos = '0' + d.getSeconds(); }
+
+                    pDia.textContent = dia;
+                    pMes.textContent = mes;
+                    pYear.textContent = year;
+                    pHoras.textContent = horas;
+                    pMinutos.textContent = minutos;
+                    pSegundos.textContent = segundos;
+                    pAmpm.textContent = ampm;
+                };
+                fecha();
+                var intervalo = setInterval(fecha, 1000);
+            </script>
+        </div>
+        <div id="boton_user">
+            <!--Botones Factura y Usuario-->
+            <a href="/vendedores"><button type="submit" class="btn btn-info boton">Ir a Usuarios</button></a>
+            <a href="/facturasV"><button type="submit" class="btn btn-info boton">Ir a Facturas</button></a>
+            <div class="salir">
+                <div
+                    style="display:flex;border-radius: 10px;padding: 5px 10px 2px; margin-right: 20px; background: #FFF;margin-bottom: 2px;">
+                    <!--Foto usuario, Nombre y Código-->
+                    <img src="https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png"
+                        alt="" height="60px" width="60px"></img>
+                    <div class="nombre">
+                        <div th:text="${nombre}"></div>
+                        <div th:text="${rol}"></div>
+                        <a href="/salir"><button class="btn btn-danger ml-auto">Salir</button></a></li>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="w-75 m-auto border-border rounded border-white bg-white p-2 ">
+        <h3 class="text-center mb-4">Formato para Agregar Productos</h3>
+        <form th:action="@{/productos}" th:object="${producto}" method="post">
+            <div class="border-border text-center border-dark ">
+                <br>
+                <div class="row justify-content-between m-auto" style="width: 90%;">
+                    <label> Código del Producto </label>
+                    <input id="codigoproducto" type="text" th:field="*{codProducto}" required />
+                    <label> Nombre del Producto </label>
+                    <input id="nombreproducto" type="text" th:field="*{nombreProducto}" required />
+                </div>
+                <br />
+                <div class="row justify-content-between m-auto" style="width: 90%;">
+                    <label> Descripción Producto</label>
+                    <input id="descripcionproducto" type="text" th:field="*{descripcionProducto}" required />
+                    <label> Precio del Producto ($)</label>
+                    <input id="precioproducto" type="text" th:field="*{precioProducto}" required />
+                </div>
+                <br /> <br />
+                <button type="submit" class="mb-3 btn btn-success text-white">Agregar Producto</button>
+            </div>
         </form>
-    </body>
+        <br>
+        <hr>
+        <br>
+        <h3 class="text-center mb-4">Lista de Productos</h3>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col"><strong>Código</strong></div>
+                    <div class="col"><strong>Nombre de producto</strong></div>
+                    <div class="col"><strong>Descripción</strong></div>
+                    <div class="col"><strong>Precio</strong></div>
+                </div>
+            </div>
+        </div>
+        <div class="card" th:each="producto: ${productos}">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col" th:text="${producto.codProducto}"></div>
+                    <div class="col" th:text="${producto.nombreProducto}"></div>
+                    <div class="col" th:text="${producto.descripcionProducto}"></div>
+                    <div class="col" th:text="${producto.precioProducto}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+</body>
+
 </html>

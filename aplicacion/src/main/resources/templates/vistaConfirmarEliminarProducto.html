@@ -1,13 +1,15 @@
 <!DOCTYPE html>
+
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-    <title>Consultar Vendedores</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
+    <title>Eliminar Productos</title>
+    <meta charset="UTF-8">
+    </meta>
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
     <style>
         body input {
             border-radius: 2px;
@@ -47,6 +49,20 @@
             background: #1077ece0;
         }
 
+        .salir ul,
+        ol {
+            list-style: none;
+        }
+
+        .salir li ul {
+            display: none;
+            position: absolute;
+        }
+
+        .salir li:hover>ul {
+            display: block;
+        }
+
         .nombre {
             margin: 10px;
             font-size: small;
@@ -57,11 +73,11 @@
             float: right;
         }
     </style>
+
 </head>
 
 <body class="bg-dark">
-    <div class="box ">
-        <!--Overflow para evitar errores de posicionamiento float-->
+    <div class="box">
         <div class="caja_reloj">
             <div class="reloj">
                 <!--Reloj-->
@@ -120,7 +136,7 @@
             </script>
         </div>
         <div style="display: flex;float: right;">
-            <a href="/volverV"><button class="btn btn-info boton">Volver</button></a>
+            <a href="/volverP"><button class="btn btn-info boton">Volver</button></a>
             <div class="salir">
                 <div
                     style="display:flex;border-radius: 10px;padding: 5px 10px 2px; margin-right: 20px; background: #FFF;margin-bottom: 2px;">
@@ -137,28 +153,30 @@
         </div>
     </div>
     <div class="w-75 m-auto border-border rounded border-white bg-white p-2 ">
-        <h1 class="text-center mb-4">Listado de vendedores</h1>
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col"><strong>Código</strong></div>
-                    <div class="col"><strong>Nombre Vendedor</strong></div>
-                    <div class="col"><strong>Rol</strong></div>
+        <p style="color: red;text-align: center;" th:text="${respuesta}"></p>
+        <h3 class="text-center mb-4">Eliminar Productos</h3>
+        <form th:action="@{/productos/eliminar}" th:object="${producto}" method="delete">
+            <div class="border-border text-center border-dark ">
+                <div class="row justify-content-between m-auto" style="width: 90%;">
+                    <label> Código del Producto </label>
+                    <input id="codigoproducto" type="text" th:field="*{codProducto}" th:value="*{codProducto}"
+                        readonly="true" />
+                    <label> Nombre del Producto </label>
+                    <input id="nombreproducto" type="text" th:field="*{nombreProducto}" readonly="true" />
                 </div>
-            </div>
-        </div>
-        <div class="card" th:each="vendedor: ${vendedores}">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col" th:text="${vendedor.codVendedor}"></div>
-                    <div class="col" th:text="${vendedor.nombreVendedor}"></div>
-                    <div class="col" th:text="${vendedor.rolVendedor}"></div>
+                <br>
+                <div class="row justify-content-between m-auto" style="width: 90%;">
+                    <label> Descripción Producto</label>
+                    <input id="descripcionproducto" type="text" th:field="*{descripcionProducto}" readonly="true" />
+                    <label> Precio del Producto ($)</label>
+                    <input id="precioproducto" type="text" th:field="*{precioProducto}" readonly="true" />
                 </div>
+                <br>
+                <a th:href="@{/productos/eliminar(codProducto= ${producto.codProducto})}"><button
+                        class="mb-3 btn btn-success text-white">Eliminar Producto</button></a>
             </div>
-        </div>
+        </form>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

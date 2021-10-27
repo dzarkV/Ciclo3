@@ -1,13 +1,15 @@
 <!DOCTYPE html>
+
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-    <title>Consultar Vendedores</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
+    <title>Productos</title>
+    <meta charset="UTF-8">
+    </meta>
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
     <style>
         body input {
             border-radius: 2px;
@@ -47,6 +49,20 @@
             background: #1077ece0;
         }
 
+        .salir ul,
+        ol {
+            list-style: none;
+        }
+
+        .salir li ul {
+            display: none;
+            position: absolute;
+        }
+
+        .salir li:hover>ul {
+            display: block;
+        }
+
         .nombre {
             margin: 10px;
             font-size: small;
@@ -60,7 +76,7 @@
 </head>
 
 <body class="bg-dark">
-    <div class="box ">
+    <div class="box">
         <!--Overflow para evitar errores de posicionamiento float-->
         <div class="caja_reloj">
             <div class="reloj">
@@ -119,8 +135,10 @@
                 var intervalo = setInterval(fecha, 1000);
             </script>
         </div>
-        <div style="display: flex;float: right;">
-            <a href="/volverV"><button class="btn btn-info boton">Volver</button></a>
+        <div id="boton_user">
+            <!--Botones Factura y Usuario-->
+            <a href="/vendedoresA"><button type="submit" class="btn btn-info boton">Ir a Usuarios</button></a>
+            <a href="/facturasA"><button type="submit" class="btn btn-info boton">Ir a Facturas</button></a>
             <div class="salir">
                 <div
                     style="display:flex;border-radius: 10px;padding: 5px 10px 2px; margin-right: 20px; background: #FFF;margin-bottom: 2px;">
@@ -136,23 +154,57 @@
             </div>
         </div>
     </div>
+    <br>
     <div class="w-75 m-auto border-border rounded border-white bg-white p-2 ">
-        <h1 class="text-center mb-4">Listado de vendedores</h1>
+        <h1 class="text-center mb-4">Formato de Creación de Productos</h1>
+            <!--Formulario CRUD para los productos-->
+            <form th:action="@{/productos}" th:object="${producto}" method="post">
+                <div class="border-border text-center border-dark ">
+                    <br>
+                    <div class="row justify-content-between m-auto" style="width: 90%;">
+                        <label> Código del Producto </label>
+                        <input id="codigoproducto" type="text" th:field="*{codProducto}" required />
+                        <label> Nombre del Producto </label>
+                        <input id="nombreproducto" type="text" th:field="*{nombreProducto}" required />
+                    </div>
+                    <br /><br />
+                    <div class="row justify-content-between m-auto" style="width: 90%;">
+                        <label> Descripción Producto</label>
+                        <input id="descripcionproducto" type="text" th:field="*{descripcionProducto}" required />
+                        <label> Precio del Producto ($)</label>
+                        <input id="precioproducto" type="text" th:field="*{precioProducto}" required />
+                    </div>
+                    <br /> <br />
+                    <button type="submit" class="mb-3 btn btn-success text-white">Agregar Producto</button>
+                </div>
+            </form>
+        <br>
+        <hr>
+        <br>
+        <h3>Lista de Productos</h3>
         <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="col"><strong>Código</strong></div>
-                    <div class="col"><strong>Nombre Vendedor</strong></div>
-                    <div class="col"><strong>Rol</strong></div>
+                    <div class="col"><strong>Nombre de producto</strong></div>
+                    <div class="col"><strong>Descripción</strong></div>
+                    <div class="col"><strong>Precio</strong></div>
+                    <div class="col"><strong>Acción</strong></div>
                 </div>
             </div>
         </div>
-        <div class="card" th:each="vendedor: ${vendedores}">
+        <div class="card" th:each="producto: ${productos}">
             <div class="card-body">
                 <div class="row">
-                    <div class="col" th:text="${vendedor.codVendedor}"></div>
-                    <div class="col" th:text="${vendedor.nombreVendedor}"></div>
-                    <div class="col" th:text="${vendedor.rolVendedor}"></div>
+                    <div class="col" th:text="${producto.codProducto}"></div>
+                    <div class="col" th:text="${producto.nombreProducto}"></div>
+                    <div class="col" th:text="${producto.descripcionProducto}"></div>
+                    <div class="col" th:text="${producto.precioProducto}"></div>
+                    <div class="col">
+                        <a th:href="@{/productos/editar/} + ${producto.codProducto}"><button class="btn btn-success text-white" style="margin-bottom: 5px;">Editar</button></a><br>
+                        <a
+                            th:href="@{/productos/confirmar/eliminar(codProducto= ${producto.codProducto})}"><button class="btn btn-success text-white">Eliminar</button></a>
+                    </div>
                 </div>
             </div>
         </div>

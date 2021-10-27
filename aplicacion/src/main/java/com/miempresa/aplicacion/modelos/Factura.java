@@ -1,5 +1,6 @@
 package com.miempresa.aplicacion.modelos;
 
+import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,27 +26,20 @@ public class Factura {
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id_venta")
     private Long idVenta;
-    
     @Getter
-    @Setter 
-    @Column(name ="numero_factura")
+    @Setter @Column(name ="numero_factura")
     private String numeroFactura;
-    
     @Getter    
     @Setter @ManyToOne(optional = false) @JoinColumn(name = "cod_producto")
     private Producto producto;
-    
     @Getter 
-    @Setter 
-    @Column(name = "fecha_venta")  
-    private String fechaVenta; 
-    
+    @Setter @Column(name = "fecha_venta")  
+    //@Temporal(javax.persistence.TemporalType.DATE)
+    private Date fechaVenta;   
     @Getter
-    @Setter @ManyToOne(optional = false) @JoinColumn(name = "cod_vendedor")
+    @Setter @ManyToOne(optional = false) @JoinColumn(name = "cod_vendedor") 
     private Vendedor vendedor;
-    
     @Getter
-    @Setter 
-    @Column(name = "valor_factura") 
-    private Double valorFactura;
+    @Setter @Column(name = "valor_factura") 
+    private Float valorFactura;
 }

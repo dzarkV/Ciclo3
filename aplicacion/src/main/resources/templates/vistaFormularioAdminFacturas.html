@@ -1,13 +1,14 @@
 <!DOCTYPE html>
+
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-    <title>Consultar Vendedores</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
+    <title>Cear Factura</title>
+    <meta charset="UTF-8">
+    </meta>
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
     <style>
         body input {
             border-radius: 2px;
@@ -119,8 +120,11 @@
                 var intervalo = setInterval(fecha, 1000);
             </script>
         </div>
-        <div style="display: flex;float: right;">
-            <a href="/volverV"><button class="btn btn-info boton">Volver</button></a>
+        <div id="boton_user">
+            <!--Botones Factura y Usuario-->
+            <a href="/vendedoresA"><button type="submit" class="btn btn-info boton">Ir a Usuarios</button></a>
+            <a href="/productosA"><button type="submit" class="btn btn-info boton">Ir a Productos</button></a>
+
             <div class="salir">
                 <div
                     style="display:flex;border-radius: 10px;padding: 5px 10px 2px; margin-right: 20px; background: #FFF;margin-bottom: 2px;">
@@ -137,22 +141,98 @@
         </div>
     </div>
     <div class="w-75 m-auto border-border rounded border-white bg-white p-2 ">
-        <h1 class="text-center mb-4">Listado de vendedores</h1>
+        <h1 class="text-center mb-4">Busqueda de Facturas/Informes</h1>
+        <br>
+        <form th:action="@{/consultar/factura}" th:object="${factura}" method="post">
+            <div class="border-border text-center border-dark">
+                <label> Número de factura </label>
+                <input id="numerofactura" type="text" th:field="*{numeroFactura}"
+                    style="width: 100px; margin-right: 20px;" placeholder="  N° Factura" required />
+                <label> Código del Vendedor</label>
+                <input id="codigovendedor" type="text" th:field="*{codigoVendedor}" placeholder="   Código" />
+                <br /> <br />
+                <button type="submit" class="btn btn-success text-white">Consultar</button>
+            </div>
+            <br>
+            <hr>
+            <br>
+        </form>
+        <h1 class="text-center mb-4">Eliminacion de Facturas</h1>
+        <form th:action="@{/facturas/Borrar}" th:object="${factura}" method="post">
+            <div class="border-border text-center border-dark">
+                <label> Número de factura </label>
+                <input id="numerofactura" type="text" th:field="*{numeroFactura}" />
+                <br /> <br />
+                <button type="submit" class="btn btn-success text-white">Eliminar</button>
+            </div>
+        </form>
+        <br>
+        <hr>
+        <br>
+        <h1 class="text-center mb-4">Forma para creación de Factura</h1>
+        <form th:action="@{/crear/factura}" th:object="${factura}" method="post">
+            <div class="border-border text-center border-dark ">
+                <div class="row justify-content-between m-auto" style="width: 80%;margin-top: 30px;">
+                    <label> Número de factura </label>
+                    <input id="numerofactura" type="text" th:field="*{numeroFactura}" required class="mw-25"/>
+                    <label> Código del Producto </label>
+                    <input id="codigoproducto" type="text" th:field="*{codigoProducto}" required />
+                </div>
+                <br>
+                <div class="row justify-content-between m-auto" style="width: 80%;">
+                    <label> Fecha de venta </label>
+                    <input id="fecha" type="date" th:field="*{fechaVenta}" required />
+                    <label> Código del Vendedor</label>
+                    <input id="codigovendedor" type="text" th:field="*{codigoVendedor}" required />
+                </div>
+                <br>
+                <label> Precio del Producto ($)</label>
+                <input id="valorfactura" type="text" th:field="*{valorFactura}" required />
+                <br /> <br />
+                <button type="submit" class="btn btn-success text-white">Agregar Factura</button>
+            </div>
+        </form>
+        <br>
+        <hr>
+        <br>
+        <h1 class="text-center mb-4">Formulario edición de facturas</h1>
+        <form th:action="@{/facturas/Modificar}" th:object="${factura}" method="post">
+            <div class="border-border text-center border-dark">
+                <label> Número de factura </label>
+                <input id="numerofactura" type="text" th:field="*{numeroFactura}" />
+
+                <label> Código del Producto </label>
+                <input id="codigoproducto" type="text" th:field="*{codigoProducto}" />
+                <br /><br />
+                <label> Precio del Producto ($)</label>
+                <input id="valorfactura" type="text" th:field="*{valorFactura}" />
+                <br /> <br />
+                <button type="submit" class="btn btn-success text-white">Editar Factura</button>
+            </div>
+        </form>
+        <br>
+        <hr>
+        <br>
+        <h3 class="text-center mb-4">Lista de Facturas</h3>
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col"><strong>Código</strong></div>
-                    <div class="col"><strong>Nombre Vendedor</strong></div>
-                    <div class="col"><strong>Rol</strong></div>
+                    <div class="col"><strong>No.Fac</strong></div>
+                    <div class="col"><strong>Cod.Prod</strong></div>
+                    <div class="col"><strong>Fecha</strong></div>
+                    <div class="col"><strong>Cod.Vend</strong></div>
+                    <div class="col"><strong>Valor.Facura</strong></div>
                 </div>
             </div>
         </div>
-        <div class="card" th:each="vendedor: ${vendedores}">
+        <div class="card" th:each="factura: ${facturas}">
             <div class="card-body">
                 <div class="row">
-                    <div class="col" th:text="${vendedor.codVendedor}"></div>
-                    <div class="col" th:text="${vendedor.nombreVendedor}"></div>
-                    <div class="col" th:text="${vendedor.rolVendedor}"></div>
+                    <div class="col" th:text="${factura.numeroFactura}"></div>
+                    <div class="col" th:text="${factura.producto.codProducto}"></div>
+                    <div class="col" th:text="${factura.fechaVenta}"></div>
+                    <div class="col" th:text="${factura.vendedor.codVendedor}"></div>
+                    <div class="col" th:text="${factura.valorFactura}"></div>
                 </div>
             </div>
         </div>

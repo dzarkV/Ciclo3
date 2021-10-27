@@ -1,5 +1,7 @@
 package com.miempresa.aplicacion.dtos;
 
+
+import java.sql.Date;
 import lombok.Data;
 
 
@@ -7,8 +9,8 @@ import lombok.Data;
 public class FacturaDto {
     private String numeroFactura;
     private String codigoProducto;
-    private String fechaVenta;
+    private Date fechaVenta;
     private String codigoVendedor;
-    private Double valorFactura;
+    private Float valorFactura;
     
 }

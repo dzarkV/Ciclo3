@@ -1,13 +1,15 @@
 <!DOCTYPE html>
+
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-    <title>Consultar Vendedores</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
+    <title>Editar Vendedor</title>
+    <meta charset="UTF-8">
+    </meta>
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
     <style>
         body input {
             border-radius: 2px;
@@ -137,28 +139,28 @@
         </div>
     </div>
     <div class="w-75 m-auto border-border rounded border-white bg-white p-2 ">
-        <h1 class="text-center mb-4">Listado de vendedores</h1>
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col"><strong>Código</strong></div>
-                    <div class="col"><strong>Nombre Vendedor</strong></div>
-                    <div class="col"><strong>Rol</strong></div>
+        <h1 class="text-center mb-4">Formato de Edición de Datos</h1>
+        <br>
+        <div class="crud">
+            <!--Formulario CRUD para los productos-->
+            <form th:action="@{/vendedores}" th:object="${vendedor}" method="post">
+                <div class="border-border text-center border-dark mb-4">
+                    <div class="row justify-content-between m-auto" style="width: 90%;">
+                        <label> Código del Venedor </label>
+                        <input id="codigovendedor" type="text" th:value="*{codVendedor}" readonly />
+                        <label> Nombre del Vendedor </label>
+                        <input id="nombrevendedor" type="text" th:value="*{nombreVendedor}" style="width: 35%;" />
+                    </div>
+                    <br>
+                    <div class="row justify-content-between m-auto" style="width: 90%;">
+                        <label> Rol Vendedor</label>
+                        <input id="rolvendedor" type="text" th:value="*{rolVendedor}" />
+                        <label> Rol Vendedor</label>
+                        <input id="passvendedor" type="password" th:value="*{passVendedor}" />
+                    </div>
+                    <br /> <br />
+                    <button type="submit" class="btn btn-success text-white">Actualizar Vendedor</button>
                 </div>
-            </div>
-        </div>
-        <div class="card" th:each="vendedor: ${vendedores}">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col" th:text="${vendedor.codVendedor}"></div>
-                    <div class="col" th:text="${vendedor.nombreVendedor}"></div>
-                    <div class="col" th:text="${vendedor.rolVendedor}"></div>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
