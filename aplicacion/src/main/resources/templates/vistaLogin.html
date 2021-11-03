@@ -6,70 +6,96 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
         <title>Login</title>
         <meta charset="UTF-8">
-        <style>
-            body{
-    margin: 0;
-    padding: 0; 
-    font-family: sans-serif;
-    background-size: cover;
-    background: #2a4480;
-}
-.box{
-    width: 300px;
-    padding: 40px;
-    position: absolute;
-    top: 50%; 
-    left: 50%;
-    transform: translate(-50%,-50%);
-    background: #191919;
-    text-align: center;
-    border-radius: 10px;
-}
-.box h1{
-    color: white;
-    text-transform: uppercase;
-    font-weight: 500;
-    font-size: larger;
-}
-.box a{text-decoration: none;}
-.box input{
-    background: none; 
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #3498db;
-    padding: 14px 10px;
-    width: 200px;
-    outline: none;
-    color: white;
-    border-radius: 24px;
-    transition: 0.25s;
-}
-.box input:focus{
-    width: 280px;
-    border-color: #2ecc71;
-}
-.box button{background: none; 
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #2ecc71;
-    padding: 14px 10px;
-    width: 200px;
-    outline: none;
-    color: white;
-    border-radius: 24px;
-    transition: 0.25s;}
-.box button:hover{background: #3498db;}
-        </style>
+            <style>
+                body{
+                    margin: 0;
+                    padding: 0;
+                    font-family: sans-serif;
+                    background-size: cover;
+                    background: #2a4480;
+                }
+                .box{
+                    width: 300px;
+                    padding: 40px;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%,-50%);
+                    background: #191919;
+                    text-align: center;
+                    border-radius: 10px;
+                }
+                .box h1{
+                    color: white;
+                    text-transform: uppercase;
+                    font-weight: 500;
+                    font-size: larger;
+                }
+                .box a{
+                    text-decoration: none;
+                }
+                .box input{
+                    background: none;
+                    display: block;
+                    margin: 20px auto;
+                    text-align: center;
+                    border: 2px solid #3498db;
+                    padding: 14px 10px;
+                    width: 200px;
+                    outline: none;
+                    color: white;
+                    border-radius: 24px;
+                    transition: 0.25s;
+                }
+                .box input:focus{
+                    width: 280px;
+                    border-color: #2ecc71;
+                }
+                .box button{
+                    background: none;
+                    display: block;
+                    margin: 20px auto;
+                    text-align: center;
+                    border: 2px solid #2ecc71;
+                    padding: 14px 10px;
+                    width: 200px;
+                    outline: none;
+                    color: white;
+                    border-radius: 24px;
+                    transition: 0.25s;
+                }
+                .box button:hover{
+                    background: #3498db;
+                }
+                #footer {
+                    text-align: center;
+                    /*display: block;*/
+                    margin: 0px auto;
+                    color: white;
+                    background: #191919;
+                    border: 1px solid black;
+                    border-radius: 10px;
+                    bottom: 0;
+                    width:100%;
+                    position: fixed;
+                }
+            </style>
     </head>
     <body>  
-        
+
         <form class="box" th:action="@{/}" th:object="${usuario}" method="post">
             <h1>!Bienvenido al Sistema de facturación!</h1>
             <input type="text" placeholder="Usuario" th:field="*{codVendedor}" required>
-            <input type="password" placeholder="Contraseña" th:field="*{passVendedor}" required>
-            <button type="submit" >Ingresar</button>
-        </form>
-    </body>
+                <input type="password" placeholder="Contraseña" th:field="*{passVendedor}" required>
+                    <button type="submit" >Ingresar</button>
+        </form> 
+    <div id="footer">
+        <p> Made by: Camilo Solano, Juan Sebastian Diaz, Juan David Miguez, Dave Gomez, Diego Vargas, Andrés Lizcano </p>
+        <p> 
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>&nbsp;&nbsp;<a href="">GitHub</a>&nbsp;&nbsp; MisiónTIC 2022 </p>
+            
+    </div>
+    </body> 
 </html>

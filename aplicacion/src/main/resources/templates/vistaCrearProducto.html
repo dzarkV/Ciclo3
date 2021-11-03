@@ -188,6 +188,7 @@
                     <div class="col"><strong>Nombre de producto</strong></div>
                     <div class="col"><strong>Descripción</strong></div>
                     <div class="col"><strong>Precio</strong></div>
+                    <div class="col"><strong>Cantidad</strong></div>
                 </div>
             </div>
         </div>
@@ -197,11 +198,35 @@
                     <div class="col" th:text="${producto.codProducto}"></div>
                     <div class="col" th:text="${producto.nombreProducto}"></div>
                     <div class="col" th:text="${producto.descripcionProducto}"></div>
-                    <div class="col" th:text="${producto.precioProducto}"></div>
+                    <div class="col" th:text="${producto.precioProducto}"></div>    
+                    <div class="col" th:text="${producto.cantidadProducto}"></div>
+                        <!--<a ><button class="btn btn-success text-white" style="margin-bottom: 5px;" data-toggle="modal" data-target="#modal-cantidad">Detalles</button></a><br>-->
                 </div>
             </div>
         </div>
     </div>
+    
+    <!--Contenedor modal para cantidades-->    
+<!--    <div class="container">
+        <div class="modal fade" tabindex="-1" id="modal-cantidad">
+            <div class="modal-dialog modal-ms modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>Cantidad de producto</h5>
+                        <button class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div >
+                            Cuerpito
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>

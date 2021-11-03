@@ -134,8 +134,16 @@ public class ControladorProducto {
     @GetMapping("/productos/eliminar")
     public String eliminarProducto(Producto producto, Model modelo) {
         try {
-            repositorioProducto.delete(producto);
-            return "redirect:/productosA";
+            Producto productoElegido = repositorioProducto.findByCodProducto(producto.getCodProducto());
+            if( productoElegido.getCantidadProducto() > 0) {
+                Integer nuevaCantidad = productoElegido.getCantidadProducto() - 1;
+                productoElegido.setCantidadProducto(nuevaCantidad) ;
+                
+                repositorioProducto.save(productoElegido);
+                return "redirect:/productosA";
+            } else {
+            repositorioProducto.delete(producto); // Borra el registro del producto
+            return "redirect:/productosA";}
         } catch (Exception e) {
             String messageRequest = e.getMessage();
             if (messageRequest.contains("could not execute statement; SQL")) {

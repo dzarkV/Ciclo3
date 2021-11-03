@@ -35,5 +35,9 @@ public class Producto {
     @Setter
     @Column(name = "precio_producto")
     private Double precioProducto;
-
+    
+    @Getter
+    @Setter
+    @Column(name = "cantidad_producto")
+    private Integer cantidadProducto;
 }

@@ -52,7 +52,7 @@ public class ControladorBienvenido {
                 return "vistaBienvenidoAdmin";
             }
         } else {
-            System.out.println("Contraseña INCorrecta");
+            System.out.println("Contraseña Incorrecta");
             return "vistaErrorLog";
         }
         System.out.println("Rol No Admin");
