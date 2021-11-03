@@ -24,3 +24,6 @@ You can access and see the features [here](https://ciclo3-app.herokuapp.com/) wi
 - Pass: 1234
 
 ---
+## To do
+
+- Enhance the API REST services and implements Swagger-ui
